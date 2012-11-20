@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--
+  
+   Copyright (c) 2011, 2012 Research In Motion Limited.
+  
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+  
+   http://www.apache.org/licenses/LICENSE-2.0
+  
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+-->
+<qnx xmlns="http://www.qnx.com/schemas/application/1.0">
+
+<!-- BlackBerry Tablet OS application descriptor file.
+
+    Specifies parameters for identifying, installing, and launching native applications on BlackBerry Tablet OS.
+
+-->
+
+    <!-- A universally unique application identifier. Must be unique across all BlackBerry Tablet OS applications.
+         Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
+    <id>de.kodira.Pattern</id>
+
+    <!-- The name that is displayed in the BlackBerry Tablet OS application installer. 
+         May have multiple values for each language. See samples or xsd schema file. Optional. -->
+    <name>Pattern</name>
+    
+    <!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application version which can be used to check for application upgrade. 
+         Values can also be 1-part or 2-part. It is not necessary to have a 3-part value.
+         An updated version of application must have a versionNumber value higher than the previous version. Required. -->
+    <versionNumber>0.9.1</versionNumber>
+
+    <!-- Fourth digit segment of the package version. First three segments are taken from the 
+         <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
+    <buildId>1</buildId>
+                 
+    <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
+    <versionLabel>Beta 2</versionLabel>
+
+    <!-- Description, displayed in the BlackBerry Tablet OS application installer.
+         May have multiple values for each language. See samples or xsd schema file. Optional. -->
+    <!-- We keep it short and don't translate it, because we know of no place where this actually shows. -->
+    <description>Pattern lets you set your wallpaper to beautiful patterns and colors. Choose amongst tousands of amazing patterns provided by colourlovers.com. All patterns are licensed under CC-BY-NC-SA.
+    </description>
+
+    <!-- Copyright information. Optional. -->
+    <copyright>2012 Kodira</copyright>
+
+    <!--  Name of author which is used for signing. Must match the developer name of your development certificate. -->
+    <author>Kodira UG</author>
+    <authorId>gYAAgB7aAXvpUhF3z1kKI_e-L0U</authorId>
+    
+    <!--  Unique author ID assigned by signing authority. Required if using debug tokens. -->
+    <!-- <authorId>ABC1234YjsnUk235h</authorId> -->
+   
+    <initialWindow>
+        <systemChrome>none</systemChrome>
+        <transparent>false</transparent>
+    </initialWindow>
+    
+    <!-- Use dark theme -->
+    <cascadesTheme>dark</cascadesTheme>
+    
+    <!--  The category where the application appears. Either core.games or core.media. -->
+    <category>core.media</category>
+    <configuration id="com.qnx.qcc.toolChain.1906666252" name="Default">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset path="arm/o.le-v7-g/Pattern" entry="true" type="Qnx/Elf">Pattern</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.toolChain.750609195" name="Device-Debug">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset path="arm/o.le-v7-g/Pattern" entry="true" type="Qnx/Elf">Pattern</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.toolChain.999460683" name="Device-Release">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset path="arm/o.le-v7/Pattern" entry="true" type="Qnx/Elf">Pattern</asset>
+    </configuration>
+    <configuration id="com.qnx.qcc.toolChain.136561070" name="Simulator-Debug">
+       <platformArchitecture>x86</platformArchitecture>
+       <asset path="x86/o-g/Pattern" entry="true" type="Qnx/Elf">Pattern</asset>
+    </configuration>
+
+    <!-- All assets like QML files and images -->
+    <asset path="assets">assets</asset>
+    
+    <!--  The launch icon for the application, which should be 81x81. -->
+    <asset path="icon.png">icon.png</asset>
+    <icon>
+        <image>icon.png</image>
+    </icon>
+    
+    <!--  The splash screen -->
+    <asset path="splash-768x1280.png">splash-768x1280.png</asset>
+    <splashScreens>
+        <image>splash-768x1280.png</image>
+    </splashScreens>
+    
+    <!-- Locale support -->
+    <asset path="translations" dest="qm">
+        <include name="*.qm"/>
+    </asset>
+    
+    <!-- Request permission to execute native code.  Required for native applications. -->
+    <action system="true">run_native</action>
+    <action>access_internet</action>
+    <env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib"/>
+
+    <!--  The permissions requested by your application. -->
+    <!--  <action>access_shared</action> -->
+    <!--  <action>record_audio</action> -->
+    <!--  <action>read_geolocation</action> -->
+    <!--  <action>use_camera</action> -->
+    <!--  <action>access_internet</action> -->
+    <!--  <action>play_audio</action> -->
+    <!--  <action>post_notification</action> -->
+    <!--  <action>set_audio_volume</action> -->
+    <!--  <action>read_device_identifying_information</action> -->
+
+</qnx>

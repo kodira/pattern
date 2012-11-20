@@ -1,0 +1,8 @@
+arm/*
+x86/*
+*~
+.moc
+.obj
+*.pro.user
+*.qm
+
