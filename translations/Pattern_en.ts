@@ -6,7 +6,15 @@
     <message>
         <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald for Kodira.
 This program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More Apps</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

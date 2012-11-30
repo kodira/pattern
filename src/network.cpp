@@ -1,5 +1,10 @@
 #include "network.h"
 
+#include <QPainter>
+#include <QBrush>
+#include <QDebug>
+
+
 QNetworkAccessManager* Network::m_netManager = 0;
 
 QNetworkAccessManager* Network::manager()
@@ -15,3 +20,22 @@ QNetworkAccessManager* Network::manager()
 	return m_netManager;
 }
 
+QImage Network::createImageFromTile(QByteArray data, int width, int height)
+{
+	QImage orig;
+	if (!orig.loadFromData(data)) {
+		qDebug() << "ERROR LOADING IMAGE";
+	}
+
+	// Create empty image with target size and format
+	QImage large(width, height, QImage::Format_RGB32);
+
+	// Fill image with tiles
+	QPainter p;
+	p.begin(&large);
+	p.setBrush(QBrush(orig));
+	p.drawRect(large.rect());
+	p.end();
+
+	return large;
+}

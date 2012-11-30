@@ -8,6 +8,14 @@
 This program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More Apps</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>App</name>

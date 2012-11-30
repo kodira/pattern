@@ -1,14 +1,17 @@
 import bb.cascades 1.0
+import de.kodira 1.0
     
 Container {
     id: root
     layout: AbsoluteLayout {}
     preferredHeight: 220
     
-    ImageView {
-        image: ListItemData.listImage
+    /*
+    RemoteImageView {
+        url: ListItemData.patternUrl
         preferredHeight: 200
     }
+    */
     
     Container {
         preferredWidth: 768

@@ -2,6 +2,7 @@
 #define NETWORK_H
 
 #include <QMutex>
+#include <QImage>
 #include <QtNetwork/QNetworkAccessManager>
 
 /*!
@@ -18,6 +19,7 @@ private:
 
 public:
 	static QNetworkAccessManager* manager();
+	static QImage createImageFromTile(QByteArray data, int width, int height);
 
 };
 

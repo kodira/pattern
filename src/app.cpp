@@ -6,6 +6,7 @@
 #include <bb/system/InvokeTargetReply>
 
 #include "listmodel.h"
+#include "qmlremoteimage.h"
 
 using namespace bb::cascades;
 
@@ -16,6 +17,9 @@ App::App()
     // Needed?
     qmlRegisterType<Pattern>();
     qmlRegisterType<ListModel>();
+
+    // Make our remote image view available as QML type
+    qmlRegisterType<QmlRemoteImage>("de.kodira", 1, 0, "RemoteImageView");
 
     ListModel *patternModel = new ListModel(20, "patterns", "top", this);
     ListModel *colorModel = new ListModel(20, "colors", "top", this);
@@ -45,7 +49,7 @@ void App::setBigImage(bb::cascades::Image image)
 void App::setWallpaper(Pattern *pattern)
 {
 	qDebug() << "Saving as wallpaper";
-	QImage img = pattern->createQImage(768, 1280);
+	QImage img;// = pattern->createQImage(768, 1280);
 
     // Everytime we switch wallpapers we switch between wallpaper_a.png and wallpaper_b.png as
     // filenames. We have to do this because the setWallpaper() API does not change wallpapers
@@ -99,7 +103,7 @@ void App::onWallpaperFinished(const QUrl &url, int result)
 
 void App::shareWallpaper(Pattern *pattern)
 {
-    QImage img = pattern->createQImage(768, 1280);
+    QImage img;// = pattern->createQImage(768, 1280);
     img.save("./data/wallpaper.png");
 
     QString path = QDir::current().absoluteFilePath("data/wallpaper.png");

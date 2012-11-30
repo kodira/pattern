@@ -41,7 +41,6 @@ Page {
             }
             
             ListView {
-                
                 visible: !indicator.visible
                 
                 onCreationCompleted: {
