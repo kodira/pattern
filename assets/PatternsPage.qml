@@ -96,8 +96,6 @@ Page {
                     // TODO: Refactor last line to
                     // app.createBigImage(chosenItem.pattern, 768, 1280)
                     mySheet.pattern = chosenItem;
-                    mySheet.title = chosenItem.title;
-                    mySheet.userName = chosenItem.userName;
                     mySheet.open();
                 }
                 

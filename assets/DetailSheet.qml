@@ -2,8 +2,6 @@ import bb.cascades 1.0
 
 Sheet {
     id: root
-    property string title
-    property string userName
     property variant pattern
     
     content: Page {
@@ -61,13 +59,13 @@ Sheet {
                 }
 
                 Label {
-                    text: root.title
+                    text: root.pattern.title
                     textStyle.fontWeight: FontWeight.Bold
                     textStyle.fontSize: FontSize.Medium
                     textStyle.color: Color.White
                 }
                 Label {
-                    text: qsTr("by") + " " + root.userName
+                    text: qsTr("by") + " " + root.pattern.userName
                     textStyle.fontWeight: FontWeight.Bold
                     textStyle.fontSize: FontSize.Small
                     textStyle.color: Color.White
