@@ -6,7 +6,16 @@
     <message>
         <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald for Kodira.
 This program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
-        <translation>Mit &apos;Pattern&apos; kannst du tolle Muster und Farben als Hintergrundbild setzten. Geschrieben von Cornelius Hald für Kodira.
+        <translation type="obsolete">Mit &apos;Pattern&apos; kannst du tolle Muster und Farben als Hintergrundbild setzten. Geschrieben von Cornelius Hald für Kodira.
+Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA Lizenz.</translation>
+    </message>
+</context>
+<context>
+    <name>AboutPageContent</name>
+    <message>
+        <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald for Kodira.
+This program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
+        <translation type="unfinished">Mit &apos;Pattern&apos; kannst du tolle Muster und Farben als Hintergrundbild setzten. Geschrieben von Cornelius Hald für Kodira.
 Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA Lizenz.</translation>
     </message>
 </context>
@@ -55,11 +64,22 @@ Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA L
     </message>
     <message>
         <source>Load previous page</source>
-        <translation>Vorige Seite laden</translation>
+        <translation type="obsolete">Vorige Seite laden</translation>
     </message>
     <message>
         <source>Load next page</source>
-        <translation>Nächste Seite laden</translation>
+        <translation type="obsolete">Nächste Seite laden</translation>
+    </message>
+</context>
+<context>
+    <name>PatternsPageContent</name>
+    <message>
+        <source>Load previous page</source>
+        <translation type="unfinished">Vorige Seite laden</translation>
+    </message>
+    <message>
+        <source>Load next page</source>
+        <translation type="unfinished">Nächste Seite laden</translation>
     </message>
 </context>
 <context>

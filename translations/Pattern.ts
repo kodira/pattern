@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>AboutPage</name>
+    <name>AboutPageContent</name>
     <message>
         <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald for Kodira.
 This program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
@@ -52,6 +52,9 @@ This program uses the COLOURlovers.com API. All patterns are licensed under CC-B
         <source>Newest</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>PatternsPageContent</name>
     <message>
         <source>Load previous page</source>
         <translation type="unfinished"></translation>

@@ -2,11 +2,11 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en_GB">
 <context>
-    <name>AboutPage</name>
+    <name>AboutPageContent</name>
     <message>
         <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald for Kodira.
 This program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -52,13 +52,16 @@ This program uses the COLOURlovers.com API. All patterns are licensed under CC-B
         <source>Newest</source>
         <translation></translation>
     </message>
+</context>
+<context>
+    <name>PatternsPageContent</name>
     <message>
         <source>Load previous page</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Load next page</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

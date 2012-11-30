@@ -5,6 +5,7 @@ Sheet {
     property string title
     property string userName
     property variant pattern
+    property variant app
     
     content: Page {
         actions: [ 
