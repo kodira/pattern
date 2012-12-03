@@ -3,55 +3,79 @@ import de.kodira 1.0
     
 Container {
     id: root
-    layout: AbsoluteLayout {}
-    preferredHeight: 220
     
-    /*
+    property bool initialized: false
+
+    layout: DockLayout {}
+    //horizontalAlignment: HorizontalAlignment.Fill // Does not work
+    preferredWidth: 768
+    preferredHeight: 200
+    
     RemoteImageView {
-        url: ListItemData.patternUrl
-        preferredHeight: 200
+        id: image
+        // If not initialized the item might be currently in a recycled state - we should not show the image
+        url: initialized ? ListItemData.patternUrl : ""
+        verticalAlignment: VerticalAlignment.Fill
+        horizontalAlignment: HorizontalAlignment.Fill
+        
+        attachedObjects: [
+	        LayoutUpdateHandler {
+	            onLayoutFrameChanged: {
+	                image.preferredWidth = layoutFrame.width
+	                image.preferredHeight = layoutFrame.height
+	            }
+	        }
+        ]
     }
-    */
     
     Container {
-        preferredWidth: 768
         preferredHeight: 70
         background: Color.Black
         opacity: 0.5
-        layoutProperties: AbsoluteLayoutProperties {
-            positionX: 0
-            positionY: 130
-        }
-    }
-    
-    Label {
-        text: ListItemData.title + " " + qsTr("by") + " " + ListItemData.userName
-        textStyle.fontWeight: FontWeight.Bold
-        textStyle.fontSize: FontSize.Medium
-        textStyle.color: Color.White
-        layoutProperties: AbsoluteLayoutProperties {
-            positionX: 20
-            positionY: 147
-        }
-    }
-    
-    ActivityIndicator {
-        running: ListItemData.loading
-        visible: running
-        preferredWidth: 100
-        preferredHeight: 100
-        layoutProperties: AbsoluteLayoutProperties {
-            positionX: 335
-            positionY: 0
-        }                
+        verticalAlignment: VerticalAlignment.Bottom
+        horizontalAlignment: HorizontalAlignment.Fill
     }
     
     Container {
+        layout: DockLayout {}
+        preferredHeight: 70
+        verticalAlignment: VerticalAlignment.Bottom
+        horizontalAlignment: HorizontalAlignment.Fill
+        leftPadding: 20
+        bottomPadding: 10
+        
+        Label {
+            text: ListItemData.title + " " + qsTr("by") + " " + ListItemData.userName
+            textStyle.fontWeight: FontWeight.Bold
+            textStyle.fontSize: FontSize.Medium
+            textStyle.color: Color.White
+            horizontalAlignment: HorizontalAlignment.Left
+            verticalAlignment: VerticalAlignment.Bottom
+        }
+    }
+    
+    Container {
+        layout: DockLayout {}
+        verticalAlignment: VerticalAlignment.Fill
+        horizontalAlignment: HorizontalAlignment.Fill
+        bottomPadding: 70
+        
+	    ActivityIndicator {
+	        running: initialized && image.loading != 1
+	        visible: running
+	        preferredWidth: 100
+	        preferredHeight: 100
+	        horizontalAlignment: HorizontalAlignment.Center
+	        verticalAlignment: VerticalAlignment.Center
+	    }
+	}
+    
+    Container {
         id: listItemOverlay
-        preferredWidth: 768
-        preferredHeight: 200
         background: Color.Black
         opacity: 0
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
     }
     
     onTouch: {

@@ -15,6 +15,8 @@ Page {
         
         Container {
             layout: StackLayout {}
+            horizontalAlignment: HorizontalAlignment.Fill
+            verticalAlignment: VerticalAlignment.Fill
             background: Color.create("#333333")
             
             SegmentedControl {
@@ -53,7 +55,11 @@ Page {
                 listItemComponents: [
                     ListItemComponent {
                         type: "listItem"
-                        PatternItem {}
+                        PatternItem {
+                            id: mainPatternItem
+                            initialized: ListItem.initialized
+                            bottomMargin: 20
+                        }
                     },
                     
                     ListItemComponent {
@@ -65,7 +71,9 @@ Page {
                                 horizontalAlignment: HorizontalAlignment.Center
                                 onClicked: headerItem.ListItem.view.dataModel.loadPreviousPage()
                             }
-                            PatternItem {}
+                            PatternItem {
+                                initialized: parent.ListItem.initialized
+                            }
                         }
                     },
                     
@@ -76,6 +84,7 @@ Page {
                             bottomPadding: 20
                             PatternItem {
                                 preferredHeight: 200
+                                initialized: parent.ListItem.initialized
                             }
                             Button {
                                 text: qsTr("Load next page")
@@ -88,12 +97,7 @@ Page {
                 
                 onTriggered: {
                     var chosenItem = dataModel.data(indexPath);
-                    console.log(chosenItem);
-                    console.log(chosenItem.imageUrl);
-                    // We're taking a loop here, maybe directly tell the C++ code to do it all?!
-                    app.bigImage = chosenItem.createImage(768, 1280);
-                    // TODO: Refactor last line to
-                    // app.createBigImage(chosenItem.pattern, 768, 1280)
+                    console.log(chosenItem.patternUrl);
                     mySheet.pattern = chosenItem;
                     mySheet.open();
                 }
@@ -111,7 +115,25 @@ Page {
                     }
                     
                     return "listItem";
-                }           
+                }
+                
+                attachedObjects: [
+	                // This handler is tracking the scroll state of the ListView.
+	                ListScrollStateHandler {
+	                    id: scrollStateHandler
+//	                    onScrollingChanged: {
+//	                        if (scrolling) {
+//	                            console.log("XXX scrolling")
+//	                        } else {
+//	                            console.log("XXX NOT scrolling")
+//	                        }
+//	                    }
+                        // TODO: Does not currently work in Beta-4
+	                    //onAtEndChanged: {
+	                    //    console.log("XXX on end of list")
+	                    //}
+	                }
+	            ]           
             }
         }
         

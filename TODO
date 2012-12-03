@@ -2,6 +2,8 @@
 * Tune icons
 
 == 0.9.2 ==
+* Bug: Segmented control on top jumps left-right during startup
+* Optimized image loading (Trigger image download from ListView. So only load image if visible)
 * Display message, if offline
 
 == Next versions ==
@@ -9,9 +11,7 @@
 * Automatic background changing, e.g. each Monday one of my favorites
 * Only load 2nd tab when needed
 * Only load sheet when needed
-* Optimized image loading (Trigger image download from ListView. So only load image if visible)
 * Maybe continuous scrolling without "next" and "prev" buttons
-* Bug: Segmented control on top jumps left-right during startup
 * Give credit to Thomas Perl (Mustr)
 * Give credit to pattern of icon (see README)
 * Add effects to generated image (like blur, noise, clouds, etc.)

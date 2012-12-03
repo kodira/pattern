@@ -54,19 +54,19 @@ This program uses the COLOURlovers.com API. All patterns are licensed under CC-B
     <name>PatternsPage</name>
     <message>
         <source>Top Rated</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Newest</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Load previous page</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Load next page</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

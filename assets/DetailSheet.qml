@@ -4,7 +4,17 @@ Sheet {
     id: root
     property variant pattern
     
-    content: Page {
+    onOpened: {
+        indicator.running = true
+        app.createBigImage(pattern.patternUrl)
+    }
+    
+    onClosed: {
+        indicator.running = false
+        img.visible = false
+    }
+    
+    Page {
         actions: [ 
             ActionItem {
                 title: qsTr("Back")
@@ -16,61 +26,67 @@ Sheet {
                 title: qsTr("As Wallpaper")
                 imageSource: "asset:///images/photos.png"
                 ActionBar.placement: ActionBarPlacement.OnBar
-                onTriggered: app.setWallpaper(pattern)
+                onTriggered: app.setWallpaper()
             },
             ActionItem {
                 title: qsTr("Share")
                 imageSource: "asset:///images/share.png"
                 ActionBar.placement: ActionBarPlacement.OnBar
-                onTriggered: app.shareWallpaper(pattern)
+                onTriggered: app.shareWallpaper()
             }
-            /*
-            ,
-            InvokeActionItem {
-                query {
-                    mimeType: "image/png"
-                    uri: "file:///accounts/1000/appdata/de.kodira.Pattern.testDev_ira_Pattern61335d67/data/wallpaper.png"
-                    invokeActionId: "bb.action.SHARE"
-                }
-            }
-            */
         ]
                 
         Container {
-            layout: AbsoluteLayout {}
+            layout: DockLayout {}
             
             ImageView {
-                preferredWidth: 768
-                preferredHeight: 1280
+                id: img
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
                 image: app.bigImage
+                
+                onImageChanged: {
+                    indicator.running = false
+                    visible = true
+                }
             }
             
             Container {
                 background: Color.Black
                 opacity: 0.5
-                preferredWidth: 768
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Top
                 preferredHeight: 180
             }
             
             Container {
-                layoutProperties: AbsoluteLayoutProperties {
-                   positionX: 20
-                   positionY: 20
-                }
+                layout: StackLayout {}
+                topPadding: 20
+                leftPadding: 20
 
                 Label {
-                    text: root.pattern.title
+                    text: root.pattern ? root.pattern.title : ""
                     textStyle.fontWeight: FontWeight.Bold
                     textStyle.fontSize: FontSize.Medium
                     textStyle.color: Color.White
                 }
+                
                 Label {
-                    text: qsTr("by") + " " + root.pattern.userName
+                    text: qsTr("by") + " " + (root.pattern ? root.pattern.userName : "")
                     textStyle.fontWeight: FontWeight.Bold
                     textStyle.fontSize: FontSize.Small
                     textStyle.color: Color.White
                 }
             }
+            
+            ActivityIndicator {
+                id: indicator
+                running: false
+                visible: running
+                horizontalAlignment: HorizontalAlignment.Fill
+                verticalAlignment: VerticalAlignment.Fill
+            }
+            
         }
     }
 }

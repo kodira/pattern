@@ -19,11 +19,14 @@ public:
 
 	float loading() const;
 
-
 private:
 	QUrl m_url;
 	float m_loading;
-	bb::cascades::Image convertImage(QImage image, int width, int height);
+	QNetworkReply * m_reply;
+	QImage m_tile;
+	bb::cascades::Image convertImage(QImage image);
+	void abortRequest();
+	void updateImageFromTile();
 
 
 signals:
@@ -33,6 +36,8 @@ signals:
 private slots:
 	void downloadProgressChanged(qint64 bytes, qint64 total);
 	void downloadFinished();
+	void myPreferredWidthChanged(float);
+	void myPreferredHeightChanged(float);
 
 
 

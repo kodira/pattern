@@ -4,6 +4,9 @@
 #include <QBrush>
 #include <QDebug>
 
+/*
+ * TODO: Rename to Helper
+ */
 
 QNetworkAccessManager* Network::m_netManager = 0;
 
@@ -20,22 +23,35 @@ QNetworkAccessManager* Network::manager()
 	return m_netManager;
 }
 
-QImage Network::createImageFromTile(QByteArray data, int width, int height)
+QImage Network::createImageFromTile(QByteArray tileData, int width, int height)
 {
-	QImage orig;
-	if (!orig.loadFromData(data)) {
-		qDebug() << "ERROR LOADING IMAGE";
-	}
+	QImage tile;
+	tile.loadFromData(tileData);
+	return createImageFromTile(tile, width, height);
+}
 
+QImage Network::createImageFromTile(QImage tile, int width, int height)
+{
 	// Create empty image with target size and format
 	QImage large(width, height, QImage::Format_RGB32);
 
 	// Fill image with tiles
 	QPainter p;
 	p.begin(&large);
-	p.setBrush(QBrush(orig));
+	p.setBrush(QBrush(tile));
 	p.drawRect(large.rect());
 	p.end();
 
 	return large;
+}
+
+bb::cascades::Image Network::convertImage(QImage image)
+{
+    // Convert QImage into byte array to create a Cascades::Image
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    image.save(&buffer, "PNG");
+
+    return bb::cascades::Image(ba);
 }

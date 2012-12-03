@@ -4,6 +4,7 @@
 #include <QMutex>
 #include <QImage>
 #include <QtNetwork/QNetworkAccessManager>
+#include <bb/cascades/Image>
 
 /*!
  * @brief Network singleton
@@ -19,7 +20,9 @@ private:
 
 public:
 	static QNetworkAccessManager* manager();
-	static QImage createImageFromTile(QByteArray data, int width, int height);
+	static QImage createImageFromTile(QByteArray tileData, int width, int height);
+	static QImage createImageFromTile(QImage tile, int width, int height);
+	static bb::cascades::Image convertImage(QImage image);
 
 };
 

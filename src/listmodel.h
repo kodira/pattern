@@ -52,7 +52,6 @@ private slots:
     void requestFinished();
 
 private:
-    QNetworkAccessManager *net;
     void parseXml(QByteArray xmlData);
     QTimer timer;
     QUrl m_url;

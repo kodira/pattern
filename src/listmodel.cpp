@@ -27,7 +27,6 @@ void ListModel::init()
     m_page = 0;
     m_loading = false;
     m_started = false;
-    net = Network::manager();
 
     // TODO: Disable sorting
     this->setSortingKeys(QStringList() << "title" << "userName");
@@ -141,10 +140,8 @@ void ListModel::loadData()
             .arg(m_results * m_page);
     
     request.setUrl(url);
-    QNetworkReply *reply = net->get(request);
+    QNetworkReply *reply = Network::manager()->get(request);
     connect(reply, SIGNAL(finished()), this, SLOT(requestFinished()));
-
-    qDebug() << "Result:" << reply->error();
 }
 
 void ListModel::requestFinished()

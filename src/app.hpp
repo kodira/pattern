@@ -25,10 +25,12 @@ public:
     App();
     bb::cascades::Image bigImage();
     void setBigImage(bb::cascades::Image image);
-    Q_INVOKABLE void setWallpaper(Pattern* pattern);
-    Q_INVOKABLE void shareWallpaper(Pattern* pattern);
+    Q_INVOKABLE void setWallpaper();
+    Q_INVOKABLE void shareWallpaper();
+    Q_INVOKABLE void createBigImage(QUrl url);
 
 private:
+    QImage m_tile;
     bb::cascades::Image m_bigImage;
     bb::platform::HomeScreen m_homeScreen;
     bb::system::SystemToast m_toast;
@@ -37,6 +39,7 @@ private:
 private slots:
 	void onWallpaperFinished(const QUrl &url, int result);
 	void onInvokationFinished();
+	void downloadFinished();
 
 signals:
     void bigImageChanged();

@@ -55,19 +55,19 @@ Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA L
     <name>PatternsPage</name>
     <message>
         <source>Top Rated</source>
-        <translation>Beliebt</translation>
+        <translation type="unfinished">Beliebt</translation>
     </message>
     <message>
         <source>Newest</source>
-        <translation>Neu</translation>
+        <translation type="unfinished">Neu</translation>
     </message>
     <message>
         <source>Load previous page</source>
-        <translation>Vorige Seite laden</translation>
+        <translation type="unfinished">Vorige Seite laden</translation>
     </message>
     <message>
         <source>Load next page</source>
-        <translation>Nächste Seite laden</translation>
+        <translation type="unfinished">Nächste Seite laden</translation>
     </message>
 </context>
 <context>
