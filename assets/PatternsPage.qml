@@ -60,38 +60,6 @@ Page {
                             initialized: ListItem.initialized
                             bottomMargin: 20
                         }
-                    },
-                    
-                    ListItemComponent {
-                        type: "topItem"    
-                        Container {
-                            id: headerItem
-                            Button {
-                                text: qsTr("Load previous page")
-                                horizontalAlignment: HorizontalAlignment.Center
-                                onClicked: headerItem.ListItem.view.dataModel.loadPreviousPage()
-                            }
-                            PatternItem {
-                                initialized: parent.ListItem.initialized
-                            }
-                        }
-                    },
-                    
-                    ListItemComponent {
-                        type: "bottomItem"    
-                        Container {
-                            id: footerItem
-                            bottomPadding: 20
-                            PatternItem {
-                                preferredHeight: 200
-                                initialized: parent.ListItem.initialized
-                            }
-                            Button {
-                                text: qsTr("Load next page")
-                                horizontalAlignment: HorizontalAlignment.Center
-                                onClicked: footerItem.ListItem.view.dataModel.loadNextPage()
-                            }
-                        }
                     }
                 ]
                 
@@ -104,16 +72,6 @@ Page {
                 
                 function itemType(data, indexPath) {
                     // Always use listItem, we don't want headers for grouping
-                    // First and last items can be special ones to load more data
-                    
-                    if (indexPath[0] == 0 && root.page > 0) {
-                        return "topItem";
-                    }
-                    
-                    if (indexPath[0] == root.results - 1) {
-                        return "bottomItem";
-                    }
-                    
                     return "listItem";
                 }
                 
@@ -131,6 +89,7 @@ Page {
                         // TODO: Does not currently work in Beta-4
 	                    //onAtEndChanged: {
 	                    //    console.log("XXX on end of list")
+	                    //    dataModel.loadNextPage()
 	                    //}
 	                }
 	            ]           

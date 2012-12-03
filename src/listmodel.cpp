@@ -13,7 +13,7 @@ ListModel::ListModel(QObject *parent) :
     m_results = 20;
     m_type = "patterns";
     m_category = "top";
-    init();   
+    init();
 }
 
 ListModel::ListModel(int results, QString type, QString category, QObject *parent) :
@@ -28,27 +28,12 @@ void ListModel::init()
     m_loading = false;
     m_started = false;
 
-    // TODO: Disable sorting
-    this->setSortingKeys(QStringList() << "title" << "userName");
-    this->setGrouping(bb::cascades::ItemGrouping::None);
-    
+    setGrouping(bb::cascades::ItemGrouping::None);
+    fixSorting();
+
     connect(this, SIGNAL(resultsChanged()), this, SLOT(loadData()));
-    connect(this, SIGNAL(pageChanged()), this, SLOT(loadData()));
     connect(this, SIGNAL(typeChanged()), this, SLOT(loadData()));
     connect(this, SIGNAL(categoryChanged()), this, SLOT(loadData()));
-}
-
-QUrl ListModel::url()
-{
-    return m_url;
-}
-
-void ListModel::setUrl(QUrl url)
-{
-    if (m_url != url) {
-        m_url = url;
-        emit urlChanged();
-    }
 }
 
 bool ListModel::loading()
@@ -64,19 +49,6 @@ void ListModel::setLoading(bool loading)
 	}
 }
 
-int ListModel::page()
-{
-    return m_page;
-}
-
-void ListModel::setPage(int page)
-{
-    if (m_page != page) {
-        m_page = page;
-        emit pageChanged();
-    }
-}
-
 int ListModel::results()
 {
     return m_results;
@@ -86,6 +58,8 @@ void ListModel::setResults(int results)
 {
     if (m_results != results) {
         m_results = results;
+        m_page = 0;
+		clear();
         emit resultsChanged();
     }
 }
@@ -99,8 +73,8 @@ void ListModel::setType(QString type)
 {
     if (m_type != type) {
         m_type = type;
-        // TODO: Now we load data two times because 2 signals are emitted. Not good.
-        setPage(0);
+        m_page = 0;
+		clear();
         emit typeChanged();
     }
 }
@@ -114,9 +88,26 @@ void ListModel::setCategory(QString category)
 {
     if (m_category != category) {
         m_category = category;
-        // TODO: Now we load data two times because 2 signals are emitted. Not good.
-        setPage(0);
+        m_page = 0;
+
+        clear();
+        fixSorting();
         emit categoryChanged();
+    }
+}
+
+void ListModel::fixSorting()
+{
+    if (m_category == "top") {
+    	m_orderCol = "score";
+    	setSortingKeys(QStringList() << "rank");
+    	setSortedAscending(true);
+    } else if (m_category == "new") {
+    	m_orderCol = "dateCreated";
+    	setSortingKeys(QStringList() << "id");
+    	setSortedAscending(false);
+    } else {
+    	qDebug() << "WARN: Unknown category:" << m_category;
     }
 }
 
@@ -128,19 +119,19 @@ void ListModel::loadData()
     }
     
 	setLoading(true);
-    this->clear();
+
 	qDebug() << "*** Doing network request ***";
 	QNetworkConfigurationManager m;
 	qDebug() << "Online:" << m.isOnline();
-    QNetworkRequest request;
-    QString url = QString("http://www.colourlovers.com/api/%1/%2/?numberResults=%3&resultOffset=%4")
+
+    QString url = QString("http://www.colourlovers.com/api/%1/%2/?numberResults=%3&resultOffset=%4?orderCol=%4&sortBy=DESC")
             .arg(m_type)
             .arg(m_category)
             .arg(m_results)
-            .arg(m_results * m_page);
+            .arg(m_results * m_page)
+            .arg(m_orderCol);
     
-    request.setUrl(url);
-    QNetworkReply *reply = Network::manager()->get(request);
+    QNetworkReply *reply = Network::manager()->get(QNetworkRequest(url));
     connect(reply, SIGNAL(finished()), this, SLOT(requestFinished()));
 }
 
@@ -198,6 +189,18 @@ void ListModel::parseXml(QByteArray xmlData)
                 qDebug() << "ImageUrl:" << pattern->patternUrl();
                 continue;
             }
+
+            if (xml.name() == "rank") {
+            	pattern->setRank(xml.readElementText().toInt());
+            	qDebug() << "Rank:" << pattern->rank();
+            	continue;
+            }
+
+            if (xml.name() == "id") {
+            	pattern->setId(xml.readElementText().toInt());
+            	qDebug() << "id:" << pattern->id();
+            	continue;
+            }
         } else {
             // Use this to read through the whole xml even if there are not start elements anymore
             xml.readNext();
@@ -212,15 +215,7 @@ void ListModel::parseXml(QByteArray xmlData)
 void ListModel::loadNextPage()
 {
     m_page++;
-    emit pageChanged();
-}
-
-void ListModel::loadPreviousPage()
-{
-    if (m_page > 0) {
-        m_page--;
-        emit pageChanged();
-    }
+    loadData();
 }
 
 void ListModel::start()

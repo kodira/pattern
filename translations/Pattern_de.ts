@@ -63,11 +63,11 @@ Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA L
     </message>
     <message>
         <source>Load previous page</source>
-        <translation type="unfinished">Vorige Seite laden</translation>
+        <translation type="obsolete">Vorige Seite laden</translation>
     </message>
     <message>
         <source>Load next page</source>
-        <translation type="unfinished">Nächste Seite laden</translation>
+        <translation type="obsolete">Nächste Seite laden</translation>
     </message>
 </context>
 <context>

@@ -56,4 +56,28 @@ void Pattern::setPatternUrl(QUrl imageUrl)
     }
 }
 
+int Pattern::rank()
+{
+	return m_rank;
+}
 
+void Pattern::setRank(int rank)
+{
+	if (m_rank != rank) {
+		m_rank = rank;
+		emit rankChanged();
+	}
+}
+
+int Pattern::id()
+{
+	return m_id;
+}
+
+void Pattern::setId(int id)
+{
+	if (m_id != id) {
+		m_id = id;
+		emit idChanged();
+	}
+}
