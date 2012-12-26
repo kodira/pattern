@@ -9,11 +9,11 @@
 * [OK] Replace Sheet with NavigationPane and Page
 * [OK] Fix splash screen
 
-
 == 0.9.3 ==
 * Display message, if offline
 * Better sharing
 * Add license file and header
+* When fast switching between "Top Rated" and "Newest", cancel HTTP request before starting new request
 
 == Next versions ==
 * Locally stored favorites
