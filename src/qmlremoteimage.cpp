@@ -80,18 +80,18 @@ void QmlRemoteImage::abortRequest()
 
 void QmlRemoteImage::myPreferredWidthChanged(float width)
 {
-	qDebug() << "Layout, myPreferredWidthChanged " << width;
+	qDebug() << "INFO: Layout, myPreferredWidthChanged " << width;
 
-	if (width > 0 && preferredHeight() > 0) {
+	if (width > 0 && isPreferredHeightSet()) {
 		updateImageFromTile();
 	}
 }
 
 void QmlRemoteImage::myPreferredHeightChanged(float height)
 {
-	qDebug() << "Layout, myPreferredHeightChanged " << height;
+	qDebug() << "INFO: Layout, myPreferredHeightChanged " << height;
 
-	if (height > 0 && preferredWidth() > 0) {
+	if (height > 0 && isPreferredWidthSet()) {
 		updateImageFromTile();
 	}
 }
