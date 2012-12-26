@@ -24,9 +24,10 @@ void QmlRemoteImage::setUrl(QUrl url)
 		m_url = url;
 		m_loading = 0;
 
+		abortRequest();
+
 		if (url.isEmpty()) {
-			abortRequest();
-			setImageSource(QUrl());
+			resetImageSource();
 		} else {
 			m_reply = Network::manager()->get(QNetworkRequest(url));
 			connect(m_reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
@@ -70,6 +71,7 @@ void QmlRemoteImage::updateImageFromTile()
 void QmlRemoteImage::abortRequest()
 {
 	if (m_reply) {
+		m_reply->disconnect();
 		m_reply->abort();
 		m_reply->deleteLater();
 		m_reply = 0;

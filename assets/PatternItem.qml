@@ -5,6 +5,8 @@ Container {
     id: root
     
     property bool initialized: false
+    property bool isFooter: false
+    property bool isLoading: false
 
     layout: DockLayout {}
     //horizontalAlignment: HorizontalAlignment.Fill // Does not work
@@ -13,8 +15,9 @@ Container {
     
     RemoteImageView {
         id: image
+        visible: !(isLoading && isFooter)
         // If not initialized the item might be currently in a recycled state - we should not show the image
-        url: initialized ? ListItemData.patternUrl : ""
+        url: root.initialized ? ListItemData.patternUrl : ""
         verticalAlignment: VerticalAlignment.Fill
         horizontalAlignment: HorizontalAlignment.Fill
         
@@ -45,7 +48,7 @@ Container {
         bottomPadding: 10
         
         Label {
-            text: ListItemData.title + " " + qsTr("by") + " " + ListItemData.userName
+            text: isLoading ? qsTr("Loading more patterns...") : ListItemData.title + " " + qsTr("by") + " " + ListItemData.userName
             textStyle.fontWeight: FontWeight.Bold
             textStyle.fontSize: FontSize.Medium
             textStyle.color: Color.White
@@ -71,7 +74,7 @@ Container {
 	}
     
     Container {
-        id: listItemOverlay
+        id: listItemTouchOverlay
         background: Color.Black
         opacity: 0
         horizontalAlignment: HorizontalAlignment.Fill
@@ -79,13 +82,43 @@ Container {
     }
     
     onTouch: {
+        if (isLoading) {
+            return;
+        }
+        
         // convert to select case
         if (event.touchType == TouchType.Down) {
-            listItemOverlay.opacity = 0.5;
-        } else if (event.touchType == TouchType.Up ||
-                event.touchType == TouchType.Cancel) {
-            listItemOverlay.opacity = 0;
+            listItemTouchOverlay.opacity = 0.5;
+        } else if (event.touchType == TouchType.Up || event.touchType == TouchType.Cancel) {
+            listItemTouchOverlay.opacity = 0;
         }
     }
+    
+    // Overlay that is only visible if this item is used as footer item
+    /*
+    Container {
+        visible: isFooter && isLoading
+        //background: Color.create("#333333")
+        horizontalAlignment: HorizontalAlignment.Fill
+        verticalAlignment: VerticalAlignment.Fill
+        layout: DockLayout {}
+        ActivityIndicator {
+            running: parent.visible
+	        preferredWidth: 100
+	        preferredHeight: 100
+            horizontalAlignment: HorizontalAlignment.Center
+	        verticalAlignment: VerticalAlignment.Center   
+        }
+        
+        Label {
+            text: qsTr("Loading more patterns")
+            textStyle.fontWeight: FontWeight.Bold
+            textStyle.fontSize: FontSize.Medium
+            textStyle.color: Color.White
+            horizontalAlignment: HorizontalAlignment.Center
+            verticalAlignment: VerticalAlignment.Bottom
+        }
+    }
+    */
 }
 

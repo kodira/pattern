@@ -27,6 +27,7 @@ public:
     void setType(QString type);
     QString category();
     void setCategory(QString category);
+    Q_INVOKABLE int length();
     
 signals:
     void urlChanged();

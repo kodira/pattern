@@ -118,19 +118,23 @@ void ListModel::loadData()
         return;
     }
     
+    // TODO: Cancel old request if sill there.
+
 	setLoading(true);
 
-	qDebug() << "*** Doing network request ***";
+	qDebug() << "INFO: Doing network request";
 	QNetworkConfigurationManager m;
-	qDebug() << "Online:" << m.isOnline();
+	qDebug() << "INFO: Are we online:" << m.isOnline();
 
-    QString url = QString("http://www.colourlovers.com/api/%1/%2/?numberResults=%3&resultOffset=%4?orderCol=%4&sortBy=DESC")
+    QString url = QString("http://www.colourlovers.com/api/%1/%2/?numberResults=%3&resultOffset=%4?orderCol=%5&sortBy=DESC")
             .arg(m_type)
             .arg(m_category)
             .arg(m_results)
             .arg(m_results * m_page)
             .arg(m_orderCol);
     
+    qDebug() << "INFO: Request:" << url;
+
     QNetworkReply *reply = Network::manager()->get(QNetworkRequest(url));
     connect(reply, SIGNAL(finished()), this, SLOT(requestFinished()));
 }
@@ -138,24 +142,23 @@ void ListModel::loadData()
 void ListModel::requestFinished()
 {
 	QNetworkReply *reply = (QNetworkReply*) sender();
-    qDebug() << "Reply finished";
+    qDebug() << "INFO: Request finished";
     if (reply->error() != QNetworkReply::NoError) {
-        qDebug() << "Network error";
+        qDebug() << "ERROR: Network error";
         // TODO: Emit error and to show note on screen
         reply->deleteLater();
         return;
     }
 
     QByteArray xmlData = reply->readAll();
-    setLoading(false);
     parseXml(xmlData);
+    setLoading(false);
 
     reply->deleteLater();
 }
 
 void ListModel::parseXml(QByteArray xmlData)
 {
-    //qDebug() << xmlData;
     QXmlStreamReader xml;
     xml.addData(xmlData);
 
@@ -165,50 +168,43 @@ void ListModel::parseXml(QByteArray xmlData)
         if (xml.readNextStartElement()) {
 
             if (xml.name() == "pattern" || xml.name() == "color") {
-                qDebug() << "Create new pattern";
                 pattern = new Pattern(this);
-                qDebug() << "################# INSERT ####################";
                 this->insert(pattern);
                 continue;
             }
 
             if (xml.name() == "title") {
                 pattern->setTitle(xml.readElementText());
-                qDebug() << "Title:" << pattern->title();
                 continue;
             }
 
             if (xml.name() == "userName") {
                 pattern->setUserName(xml.readElementText());
-                qDebug() << "UserName:" << pattern->userName();
                 continue;
             }
 
             if (xml.name() == "imageUrl") {
                 pattern->setPatternUrl(QUrl(xml.readElementText()));
-                qDebug() << "ImageUrl:" << pattern->patternUrl();
                 continue;
             }
 
             if (xml.name() == "rank") {
             	pattern->setRank(xml.readElementText().toInt());
-            	qDebug() << "Rank:" << pattern->rank();
             	continue;
             }
 
             if (xml.name() == "id") {
             	pattern->setId(xml.readElementText().toInt());
-            	qDebug() << "id:" << pattern->id();
             	continue;
             }
         } else {
-            // Use this to read through the whole xml even if there are not start elements anymore
+            // Use this to read through the whole xml even if there are no start elements anymore
             xml.readNext();
         }
     }
 
     if (xml.hasError()) {
-        qDebug() << "Error parsing XML:" << xml.errorString();
+        qDebug() << "ERROR: Error parsing XML:" << xml.errorString();
     }
 }
 
@@ -223,3 +219,9 @@ void ListModel::start()
     m_started = true;
     loadData();
 }
+
+int ListModel::length()
+{
+	return childCount(QVariantList());
+}
+

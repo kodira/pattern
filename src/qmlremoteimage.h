@@ -3,6 +3,7 @@
 
 #include <bb/cascades/ImageView>
 #include <QUrl>
+#include <QNetworkReply>
 
 class QmlRemoteImage: public bb::cascades::ImageView {
 	Q_OBJECT

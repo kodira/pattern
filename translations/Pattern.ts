@@ -46,6 +46,10 @@ This program uses the COLOURlovers.com API. All patterns are licensed under CC-B
 <context>
     <name>PatternItem</name>
     <message>
+        <source>Loading more patterns...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>by</source>
         <translation type="unfinished"></translation>
     </message>

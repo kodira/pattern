@@ -48,7 +48,11 @@ Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA L
     <name>PatternItem</name>
     <message>
         <source>by</source>
-        <translation>von</translation>
+        <translation type="unfinished">von</translation>
+    </message>
+    <message>
+        <source>Loading more patterns...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

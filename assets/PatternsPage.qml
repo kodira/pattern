@@ -43,8 +43,11 @@ Page {
             }
             
             ListView {
-                visible: !indicator.visible
+                // For some reason we cannot access root.model directly from ListItemComponent. So we cache it here.
+                property variant modelCache: root.model
                 
+                visible: !indicator.visible
+                                
                 onCreationCompleted: {
                     root.model.start()
                 }
@@ -56,9 +59,17 @@ Page {
                     ListItemComponent {
                         type: "listItem"
                         PatternItem {
-                            id: mainPatternItem
                             initialized: ListItem.initialized
                             bottomMargin: 20
+                        }
+                    },
+                    ListItemComponent {
+                        type: "listItemFooter"
+                        PatternItem {
+                            initialized: ListItem.initialized
+                            bottomMargin: 20
+                            isFooter: true
+                            isLoading: parent.modelCache.loading
                         }
                     }
                 ]
@@ -71,26 +82,22 @@ Page {
                 }
                 
                 function itemType(data, indexPath) {
-                    // Always use listItem, we don't want headers for grouping
+                    // If we are at the bottom of the list, display footer item
+                    if (indexPath[0] == root.model.length() - 1) {
+                        return "listItemFooter";
+                    }
+                    // Else return the normal item
                     return "listItem";
                 }
                 
                 attachedObjects: [
 	                // This handler is tracking the scroll state of the ListView.
 	                ListScrollStateHandler {
-	                    id: scrollStateHandler
-//	                    onScrollingChanged: {
-//	                        if (scrolling) {
-//	                            console.log("XXX scrolling")
-//	                        } else {
-//	                            console.log("XXX NOT scrolling")
-//	                        }
-//	                    }
-                        // TODO: Does not currently work in Beta-4
-	                    //onAtEndChanged: {
-	                    //    console.log("XXX on end of list")
-	                    //    dataModel.loadNextPage()
-	                    //}
+	                    onAtEndChanged: {
+	                        if (atEnd && (root.model.length() > 0)) {
+	                            root.model.loadNextPage()
+	                        }
+	                    }
 	                }
 	            ]           
             }
@@ -98,7 +105,7 @@ Page {
         
         ActivityIndicator {
             id: indicator
-            running: root.model.loading
+            running: false //root.model.loading
             visible: running
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Center
