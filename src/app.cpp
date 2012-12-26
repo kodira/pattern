@@ -132,7 +132,7 @@ void App::onInvokationFinished()
 
 void App::createBigImage(QUrl url)
 {
-	qDebug() << "XXX BigImage URL" << url;
+	qDebug() << "INFO: BigImage URL" << url;
 
 	QNetworkReply *reply = Network::manager()->get(QNetworkRequest(url));
 	connect(reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
@@ -140,22 +140,21 @@ void App::createBigImage(QUrl url)
 
 void App::downloadFinished()
 {
-	qDebug() << "XXX Big image downloaded";
+	qDebug() << "INFO: Big image downloaded";
 	QNetworkReply *reply = (QNetworkReply*) sender();
 
 	if (reply->error()) {
-		qDebug() << "XXX Network error:" << reply->errorString();
+		qDebug() << "ERROR: Network error:" << reply->errorString();
 	}
 
 	m_tile.loadFromData(reply->readAll());
 
 	QImage image = Network::createImageFromTile(m_tile, 768, 1280);
 
-	qDebug() << "XXX height" << image.height();
-	qDebug() << "XXX width" << image.width();
+	qDebug() << "INFO: Big image height" << image.height();
+	qDebug() << "INFO: Big image width" << image.width();
 
 	bb::cascades::Image cimg = Network::convertImage(image);
-	qDebug() << "XXX cimg isNull?" << cimg.isNull();
 	setBigImage(cimg);
 
 	reply->deleteLater();

@@ -29,19 +29,34 @@ Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA L
     <name>DetailSheet</name>
     <message>
         <source>Back</source>
-        <translation>Zurück</translation>
+        <translation type="obsolete">Zurück</translation>
     </message>
     <message>
         <source>As Wallpaper</source>
-        <translation>Als Hintergrund</translation>
+        <translation type="obsolete">Als Hintergrund</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>Teilen</translation>
+        <translation type="obsolete">Teilen</translation>
     </message>
     <message>
         <source>by</source>
-        <translation>von</translation>
+        <translation type="obsolete">von</translation>
+    </message>
+</context>
+<context>
+    <name>DetailsPage</name>
+    <message>
+        <source>As Wallpaper</source>
+        <translation type="unfinished">Als Hintergrund</translation>
+    </message>
+    <message>
+        <source>Share</source>
+        <translation type="unfinished">Teilen</translation>
+    </message>
+    <message>
+        <source>by</source>
+        <translation type="unfinished">von</translation>
     </message>
 </context>
 <context>

@@ -25,11 +25,7 @@ This program uses the COLOURlovers.com API. All patterns are licensed under CC-B
     </message>
 </context>
 <context>
-    <name>DetailSheet</name>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
+    <name>DetailsPage</name>
     <message>
         <source>As Wallpaper</source>
         <translation type="unfinished"></translation>

@@ -27,13 +27,8 @@ TabbedPane {
     Tab {
         title: qsTr("About")
         imageSource: "asset:///images/about.png"
+        
         AboutPage {}
     }
-    
-    attachedObjects: [
-        DetailSheet {
-            id: mySheet
-        }
-    ]
 }
 

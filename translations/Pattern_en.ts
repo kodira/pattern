@@ -25,22 +25,18 @@ This program uses the COLOURlovers.com API. All patterns are licensed under CC-B
     </message>
 </context>
 <context>
-    <name>DetailSheet</name>
-    <message>
-        <source>Back</source>
-        <translation></translation>
-    </message>
+    <name>DetailsPage</name>
     <message>
         <source>As Wallpaper</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Share</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>by</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
