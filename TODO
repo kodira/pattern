@@ -7,12 +7,13 @@
 * [OK] Only load sheet when needed
 * [OK] Continuous scrolling without "next" and "prev" buttons
 * [OK] Replace Sheet with NavigationPane and Page
-* Fix splash screen
-* Use new segmented title bar control
+* [OK] Fix splash screen
+
 
 == 0.9.3 ==
 * Display message, if offline
 * Better sharing
+* Add license file and header
 
 == Next versions ==
 * Locally stored favorites
@@ -21,4 +22,5 @@
 * Give credit to Thomas Perl (Mustr)
 * Give credit to pattern of icon (see README)
 * Add effects to generated image (like blur, noise, clouds, etc.)
+* Use new segmented title bar control (once it can be used properly on tabs with various toolbars - not gold SDK)
 
