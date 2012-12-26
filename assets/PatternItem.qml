@@ -48,7 +48,18 @@ Container {
         bottomPadding: 10
         
         Label {
-            text: isLoading ? qsTr("Loading more patterns...") : ListItemData.title + " " + qsTr("by") + " " + ListItemData.userName
+            visible: !isLoading
+            text: ListItemData.title + " " + qsTr("by") + " " + ListItemData.userName
+            textStyle.fontWeight: FontWeight.Bold
+            textStyle.fontSize: FontSize.Medium
+            textStyle.color: Color.White
+            horizontalAlignment: HorizontalAlignment.Left
+            verticalAlignment: VerticalAlignment.Bottom
+        }
+        
+        Label {
+            visible: isFooter && isLoading
+            text: qsTr("Loading more patterns...")
             textStyle.fontWeight: FontWeight.Bold
             textStyle.fontSize: FontSize.Medium
             textStyle.color: Color.White

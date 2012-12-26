@@ -103,9 +103,10 @@ Page {
             }
         }
         
+        // Only show if we are loading XML and the list is completely empty
         ActivityIndicator {
             id: indicator
-            running: false //root.model.loading
+            running: root.model.loading && root.model.length() === 0
             visible: running
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Center
