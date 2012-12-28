@@ -18,6 +18,7 @@
  */
 
 import bb.cascades 1.0
+import bb.system 1.0
 
 TabbedPane {
     id: root
@@ -49,5 +50,27 @@ TabbedPane {
         
         AboutPage {}
     }
+    
+    /*
+    onCreationCompleted: {
+        app.onlineChanged.connect(showNetworkDialog);
+    }
+    
+    function showNetworkDialog() {
+        if (!app.online) networkDialog.show();
+    }
+    
+    attachedObjects: [
+         SystemDialog {
+	         id: networkDialog
+	         title: "No network connection"
+	         body: "Kakel can be habit-forming... "
+	         onFinished:{
+	             if (myQmlDialog.result == CancelButtonSelection) {
+	             }
+	         }  
+	      }
+    ]
+    */
 }
 

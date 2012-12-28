@@ -143,8 +143,6 @@ void ListModel::loadData()
 	setLoading(true);
 
 	qDebug() << "INFO: Doing network request";
-	QNetworkConfigurationManager m;
-	qDebug() << "INFO: Are we online:" << m.isOnline();
 
     QString url = QString("http://www.colourlovers.com/api/%1/%2/?numberResults=%3&resultOffset=%4?orderCol=%5&sortBy=DESC")
             .arg(m_type)
@@ -158,7 +156,11 @@ void ListModel::loadData()
     // If there is an old request, abort it. Then start new request.
     abortRequest();
     m_reply = Helper::networkManager()->get(QNetworkRequest(url));
-    connect(m_reply, SIGNAL(finished()), this, SLOT(requestFinished()));
+    if (m_reply->error() == QNetworkReply::NoError) {
+    	connect(m_reply, SIGNAL(finished()), this, SLOT(requestFinished()));
+    } else {
+    	// TODO: What do we do on error?
+    }
 }
 
 void ListModel::requestFinished()

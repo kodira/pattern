@@ -23,6 +23,7 @@
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/AbstractPane>
 #include <bb/system/InvokeTargetReply>
+#include <QNetworkConfigurationManager>
 
 #include "listmodel.h"
 #include "qmlremoteimage.h"
@@ -43,10 +44,12 @@ App::App()
     qml->setContextProperty("colorModel", colorModel);
     qml->setContextProperty("app", this);
 
-    AbstractPane *root = qml->createRootObject<AbstractPane>();
+    m_online = m_networkConfigManager.isOnline();
 
     connect(&m_homeScreen, SIGNAL(wallpaperFinished(const QUrl&, int)), this, SLOT(onWallpaperFinished(const QUrl&, int)));
+    connect(&m_networkConfigManager, SIGNAL(onlineStateChanged(bool)), this, SLOT(onOnlineStateChanged(bool)));
 
+    AbstractPane *root = qml->createRootObject<AbstractPane>();
     Application::instance()->setScene(root);
 }
 
@@ -177,4 +180,18 @@ void App::downloadFinished()
 	setBigImage(cimg);
 
 	reply->deleteLater();
+}
+
+bool App::online()
+{
+	return m_online;
+}
+
+void App::onOnlineStateChanged(bool state)
+{
+	qDebug() << "XXX Online state changed. Now online: " << state;
+	if (m_online != state) {
+		m_online = state;
+		emit onlineChanged();
+	}
 }

@@ -39,29 +39,35 @@ class App : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bb::cascades::Image bigImage READ bigImage WRITE setBigImage NOTIFY bigImageChanged)
+    Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
 
 public:
     App();
     bb::cascades::Image bigImage();
     void setBigImage(bb::cascades::Image image);
+    bool online();
     Q_INVOKABLE void setWallpaper();
     Q_INVOKABLE void shareWallpaper();
     Q_INVOKABLE void createBigImage(QUrl url);
 
 private:
     QImage m_tile;
+    bool m_online;
     bb::cascades::Image m_bigImage;
     bb::platform::HomeScreen m_homeScreen;
     bb::system::SystemToast m_toast;
     bb::system::InvokeManager m_invokeManager;
+    QNetworkConfigurationManager m_networkConfigManager;
 
 private slots:
 	void onWallpaperFinished(const QUrl &url, int result);
 	void onInvokationFinished();
 	void downloadFinished();
+	void onOnlineStateChanged(bool state);
 
 signals:
     void bigImageChanged();
+    void onlineChanged();
 
 
 

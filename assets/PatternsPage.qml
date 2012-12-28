@@ -66,7 +66,7 @@ NavigationPane {
 	                // For some reason we cannot access root.model directly from ListItemComponent. So we cache it here.
 	                property variant modelCache: root.model
 	                
-	                visible: !indicator.visible
+	                visible: !indicator.visible && !errorMessage.visible
 	                                
 	                onCreationCompleted: {
 	                    root.model.start()
@@ -133,12 +133,40 @@ NavigationPane {
 	        // Only show if we are loading XML and the list is completely empty
 	        ActivityIndicator {
 	            id: indicator
-	            running: root.model.loading && root.model.length() === 0
+	            running: root.model.loading && app.online && root.model.length() === 0 
 	            visible: running
 	            horizontalAlignment: HorizontalAlignment.Center
 	            verticalAlignment: VerticalAlignment.Center
 	            preferredWidth: 200.0
 	            preferredHeight: 200.0
+	        }
+	        
+	        
+	        Container {
+	            id: errorMessage
+	            visible: false //!app.online
+	            horizontalAlignment: HorizontalAlignment.Fill
+	            verticalAlignment: VerticalAlignment.Center
+	            
+		        Label {
+		            text: "Cannot connect to internet. Please make sure you have a working internet connection."
+		            multiline: true
+		            preferredWidth: 500
+    	            horizontalAlignment: HorizontalAlignment.Center
+		        }
+		        
+	            Button {
+		            text: "Open network settings"
+		            preferredWidth: 500
+    	            horizontalAlignment: HorizontalAlignment.Center
+		        }
+		        
+		        Button {
+		            text: "Try again"
+		            preferredWidth: 500
+    	            horizontalAlignment: HorizontalAlignment.Center
+    	            onClicked: root.model.start()
+		        }
 	        }
 	    }
 	}
