@@ -16,6 +16,7 @@
 == Next versions ==
 * Display message, if offline
 * Better sharing (Currently only 'BBM Group works')
+* Use "booster" for faster start-up
 * Locally stored favorites
 * Automatic background changing, e.g. each Monday one of my favorites
 * Only load 2nd tab when needed
