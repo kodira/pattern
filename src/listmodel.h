@@ -73,8 +73,10 @@ private:
     QString m_category;
     QString m_orderCol;
     bool m_started;
+    QNetworkReply *m_reply;
     void init();
     void fixSorting();
+    void abortRequest();
 };
 
 #endif // LISTMODEL_H

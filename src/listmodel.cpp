@@ -23,7 +23,7 @@
 #include <QStringList>
 
 #include "pattern.h"
-#include "network.h"
+#include "helper.h"
 #include "listmodel.h"
 
 ListModel::ListModel(QObject *parent) :
@@ -46,6 +46,7 @@ void ListModel::init()
     m_page = 0;
     m_loading = false;
     m_started = false;
+    m_reply = 0;
 
     setGrouping(bb::cascades::ItemGrouping::None);
     fixSorting();
@@ -154,26 +155,38 @@ void ListModel::loadData()
     
     qDebug() << "INFO: Request:" << url;
 
-    QNetworkReply *reply = Network::manager()->get(QNetworkRequest(url));
-    connect(reply, SIGNAL(finished()), this, SLOT(requestFinished()));
+    // If there is an old request, abort it. Then start new request.
+    abortRequest();
+    m_reply = Helper::networkManager()->get(QNetworkRequest(url));
+    connect(m_reply, SIGNAL(finished()), this, SLOT(requestFinished()));
 }
 
 void ListModel::requestFinished()
 {
-	QNetworkReply *reply = (QNetworkReply*) sender();
     qDebug() << "INFO: Request finished";
-    if (reply->error() != QNetworkReply::NoError) {
+    if (m_reply->error() != QNetworkReply::NoError) {
         qDebug() << "ERROR: Network error";
         // TODO: Emit error and to show note on screen
-        reply->deleteLater();
+        m_reply->deleteLater();
         return;
     }
 
-    QByteArray xmlData = reply->readAll();
+    QByteArray xmlData = m_reply->readAll();
     parseXml(xmlData);
     setLoading(false);
 
-    reply->deleteLater();
+    m_reply->deleteLater();
+    m_reply = 0;
+}
+
+void ListModel::abortRequest()
+{
+	if (m_reply) {
+		m_reply->disconnect();
+		m_reply->abort();
+		m_reply->deleteLater();
+		m_reply = 0;
+	}
 }
 
 void ListModel::parseXml(QByteArray xmlData)

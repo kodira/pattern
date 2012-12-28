@@ -18,7 +18,7 @@
  */
 
 #include "qmlremoteimage.h"
-#include "network.h"
+#include "helper.h"
 
 QmlRemoteImage::QmlRemoteImage() {
 	m_loading = 0;
@@ -48,7 +48,7 @@ void QmlRemoteImage::setUrl(QUrl url)
 		if (url.isEmpty()) {
 			resetImageSource();
 		} else {
-			m_reply = Network::manager()->get(QNetworkRequest(url));
+			m_reply = Helper::networkManager()->get(QNetworkRequest(url));
 			connect(m_reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
 			connect(m_reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgressChanged(qint64,qint64)));
 		}
@@ -82,8 +82,8 @@ void QmlRemoteImage::downloadFinished()
 void QmlRemoteImage::updateImageFromTile()
 {
 	if (preferredWidth() > 0 && preferredHeight() > 0) {
-		QImage image = Network::createImageFromTile(m_tile, preferredWidth(), preferredHeight());
-		setImage(Network::convertImage(image));
+		QImage image = Helper::createImageFromTile(m_tile, preferredWidth(), preferredHeight());
+		setImage(Helper::convertImage(image));
 	}
 }
 

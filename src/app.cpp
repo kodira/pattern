@@ -26,7 +26,7 @@
 
 #include "listmodel.h"
 #include "qmlremoteimage.h"
-#include "network.h"
+#include "helper.h"
 
 using namespace bb::cascades;
 
@@ -83,7 +83,7 @@ void App::setWallpaper()
         filename = "wallpaper_b.png";
     }
 
-    QImage img = Network::createImageFromTile(m_tile, 768, 1280);
+    QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
 
 	if (!img.save("./data/" + filename , "PNG")) {
 		qDebug() << "ERROR: Cannot save wallpaper to storage";
@@ -120,14 +120,14 @@ void App::onWallpaperFinished(const QUrl &url, int result)
 
 void App::shareWallpaper()
 {
-    QImage img = Network::createImageFromTile(m_tile, 768, 1280);
+    QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
     img.save("./data/wallpaper.png");
 
     QString path = QDir::current().absoluteFilePath("data/wallpaper.png");
     qDebug() << "ABS path:" << path;
 
     bb::system::InvokeRequest request;
-    request.setMimeType("image/png");
+    request.setMimeType("image/jpg");
     request.setAction("bb.action.SHARE");
     request.setUri(QUrl::fromLocalFile(path));
     //request.setMetadata(""); // map
@@ -153,7 +153,7 @@ void App::createBigImage(QUrl url)
 {
 	qDebug() << "INFO: BigImage URL" << url;
 
-	QNetworkReply *reply = Network::manager()->get(QNetworkRequest(url));
+	QNetworkReply *reply = Helper::networkManager()->get(QNetworkRequest(url));
 	connect(reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
 }
 
@@ -168,12 +168,12 @@ void App::downloadFinished()
 
 	m_tile.loadFromData(reply->readAll());
 
-	QImage image = Network::createImageFromTile(m_tile, 768, 1280);
+	QImage image = Helper::createImageFromTile(m_tile, 768, 1280);
 
 	qDebug() << "INFO: Big image height" << image.height();
 	qDebug() << "INFO: Big image width" << image.width();
 
-	bb::cascades::Image cimg = Network::convertImage(image);
+	bb::cascades::Image cimg = Helper::convertImage(image);
 	setBigImage(cimg);
 
 	reply->deleteLater();
