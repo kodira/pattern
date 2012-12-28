@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--
-  
-   Copyright (c) 2011, 2012 Research In Motion Limited.
-  
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-  
-   http://www.apache.org/licenses/LICENSE-2.0
-  
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-  
--->
+/*
+ * Copyright (C) 2012 Cornelius Hald <cornelius.hald@kodira.de>
+ *
+ * This file is part of Pattern.
+ *
+ * Pattern is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Pattern is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Pattern. If not, see <http://www.gnu.org/licenses/>.
+ */
+ -->
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
 
 <!-- BlackBerry Tablet OS application descriptor file.
@@ -35,14 +38,14 @@
     <!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application version which can be used to check for application upgrade. 
          Values can also be 1-part or 2-part. It is not necessary to have a 3-part value.
          An updated version of application must have a versionNumber value higher than the previous version. Required. -->
-    <versionNumber>0.9.1</versionNumber>
+    <versionNumber>0.9.3</versionNumber>
 
     <!-- Fourth digit segment of the package version. First three segments are taken from the 
          <versionNumber> element.  Must be an integer from 0 to 2^16-1 -->
     <buildId>1</buildId>
                  
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
-    <versionLabel>Beta 2</versionLabel>
+    <!--<versionLabel>Beta 2</versionLabel>-->
 
     <!-- Description, displayed in the BlackBerry Tablet OS application installer.
          May have multiple values for each language. See samples or xsd schema file. Optional. -->
@@ -51,7 +54,7 @@
     </description>
 
     <!-- Copyright information. Optional. -->
-    <copyright>2012 Kodira</copyright>
+    <!--<copyright>2012 Kodira</copyright>-->
 
     <!--  Name of author which is used for signing. Must match the developer name of your development certificate. -->
     <author>Kodira UG</author>
@@ -61,6 +64,8 @@
     <!-- <authorId>ABC1234YjsnUk235h</authorId> -->
    
     <initialWindow>
+        <aspectRatio>portrait</aspectRatio>
+        <autoOrients>false</autoOrients>
         <systemChrome>none</systemChrome>
         <transparent>false</transparent>
     </initialWindow>
@@ -108,8 +113,8 @@
     </asset>
     
     <!-- Request permission to execute native code.  Required for native applications. -->
-    <action system="true">run_native</action>
-    <action>access_internet</action>
+    <permission system="true">run_native</permission>
+    <permission>access_internet</permission>
     <env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib"/>
 
     <!--  The permissions requested by your application. -->
