@@ -6,7 +6,7 @@
     <message>
         <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald for Kodira.
 This program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
-        <translation>Mit &apos;Pattern&apos; kannst du tolle Muster und Farben als Hintergrundbild setzten. Geschrieben von Cornelius Hald für Kodira.
+        <translation type="obsolete">Mit &apos;Pattern&apos; kannst du tolle Muster und Farben als Hintergrundbild setzten. Geschrieben von Cornelius Hald für Kodira.
 Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA Lizenz.</translation>
     </message>
     <message>
@@ -16,6 +16,14 @@ Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA L
     <message>
         <source>More Apps</source>
         <translation>Mehr Apps</translation>
+    </message>
+    <message>
+        <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald during Kodira&apos;s Open-Source-Friday.
+
+Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
+        <translation>Mit Pattern kannst du tolle Muster und Farben als Hintergrundbild setzten. Geschrieben von Cornelius Hald im Rahmen des Open-Source-Freitags der Kodira.
+
+Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA Lizenz.</translation>
     </message>
 </context>
 <context>

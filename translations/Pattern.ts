@@ -4,16 +4,17 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald for Kodira.
-This program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>More Apps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald during Kodira&apos;s Open-Source-Friday.
+
+Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
