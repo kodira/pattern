@@ -49,8 +49,13 @@ void QmlRemoteImage::setUrl(QUrl url)
 			resetImageSource();
 		} else {
 			m_reply = Helper::networkManager()->get(QNetworkRequest(url));
-			connect(m_reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
-			connect(m_reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgressChanged(qint64,qint64)));
+			if (m_reply->error() == QNetworkReply::NoError) {
+				connect(m_reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
+				connect(m_reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgressChanged(qint64,qint64)));
+			} else {
+				m_reply->deleteLater();
+				m_reply = 0;
+			}
 		}
 
 		emit urlChanged();
@@ -71,9 +76,10 @@ void QmlRemoteImage::downloadProgressChanged(qint64 bytes, qint64 total)
 void QmlRemoteImage::downloadFinished()
 {
 	if (m_reply) {
-		m_tile.loadFromData(m_reply->readAll());
-		updateImageFromTile();
-
+		if (m_reply->error() == QNetworkReply::NoError) {
+			m_tile.loadFromData(m_reply->readAll());
+			updateImageFromTile();
+		}
 		m_reply->deleteLater();
 		m_reply = 0;
 	}
