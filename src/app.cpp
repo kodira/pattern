@@ -121,6 +121,15 @@ void App::onWallpaperFinished(const QUrl &url, int result)
 	m_toast.show();
 }
 
+//
+// This code currently only shares via BBM-Groups. I think it should work for other
+// channels (like Bluetooth) as well, but it doesn't (Gold SDK).
+// As a work around we're using createWallpaperForSharing() together with wallpaperUrl()
+// from QML.
+//
+// I've also tried using QImage as QVariant and using the "data" property of InvokeActionItem
+// but also without success. However the work around works fine for now.
+//
 void App::shareWallpaper()
 {
     QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
@@ -130,7 +139,7 @@ void App::shareWallpaper()
     qDebug() << "ABS path:" << path;
 
     bb::system::InvokeRequest request;
-    request.setMimeType("image/jpg");
+    request.setMimeType("image/png");
     request.setAction("bb.action.SHARE");
     request.setUri(QUrl::fromLocalFile(path));
     //request.setMetadata(""); // map
@@ -138,6 +147,21 @@ void App::shareWallpaper()
     connect(reply, SIGNAL(finished()), this, SLOT(onInvokationFinished()));
 }
 
+void App::createWallpaperForSharing()
+{
+	QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
+	img.save("./data/wallpaper.png");
+}
+
+QUrl App::wallpaperUrl()
+{
+	// The URL never changes during runtime, but hardcoding it into QML is still no good
+	// idea. So we're doing it here.
+	QString path = QDir::current().absoluteFilePath("data/wallpaper.png");
+    return QUrl::fromLocalFile(path);
+}
+
+// Currently not in use. See shareWallpaper()
 void App::onInvokationFinished()
 {
 	qDebug() << "INFO: Invokation finished";

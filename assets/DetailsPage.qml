@@ -41,12 +41,43 @@ Page {
             ActionBar.placement: ActionBarPlacement.OnBar
             onTriggered: app.setWallpaper()
         },
+        /* Doesn't work currently
         ActionItem {
             title: qsTr("Share")
             imageSource: "asset:///images/share.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             onTriggered: app.shareWallpaper()
+        },
+        */
+        InvokeActionItem {
+            ActionBar.placement: ActionBarPlacement.OnBar
+                        
+            query {
+                invokeActionId: "bb.action.SHARE"
+                mimeType: "image/png"
+                // This is a hack. We need the full absolute path and can only get them from C++
+                uri: app.wallpaperUrl()
+	        }
+	        onTriggered: {
+		        // On clicked we create the wallpaper as file
+		        app.createWallpaperForSharing()
+	        }
+        }//,
+        /* Should open image in image viewer - but does not find a target currently.
+           Gold SDK
+        InvokeActionItem {
+            ActionBar.placement: ActionBarPlacement.InOverflow
+            title: qsTr("Open in image viewer")
+            query {
+                invokeActionId: "bb.action.OPEN"
+                mimeType: "image/png"
+                uri: app.wallpaperUrl()
+	        }
+	        onTriggered: {
+		        app.createWallpaperForSharing()
+	        }
         }
+        */
     ]
             
     Container {

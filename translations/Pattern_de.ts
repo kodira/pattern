@@ -52,7 +52,7 @@ Diese app nutzt die COLOURlovers.com API. Alle Muster stehen unter CC-BY-NC-SA L
     </message>
     <message>
         <source>Share</source>
-        <translation>Teilen</translation>
+        <translation type="obsolete">Teilen</translation>
     </message>
     <message>
         <source>by</source>

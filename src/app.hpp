@@ -48,6 +48,8 @@ public:
     bool online();
     Q_INVOKABLE void setWallpaper();
     Q_INVOKABLE void shareWallpaper();
+    Q_INVOKABLE void createWallpaperForSharing();
+    Q_INVOKABLE QUrl wallpaperUrl();
     Q_INVOKABLE void createBigImage(QUrl url);
 
 private:

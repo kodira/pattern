@@ -13,9 +13,12 @@
 * [OK] Add license file and header
 * [OK] When fast switching between "Top Rated" and "Newest", cancel HTTP request before starting new request
 
-== Next versions ==
+== 0.9.4 ==
 * Display message, if offline
-* Better sharing (Currently only 'BBM Group works')
+* [OK] Better sharing (Currently only 'BBM Group works')
+
+== Next versions ==
+* Add caching of tiles for usage in ListView and especially to prevent redownloading in DetailsView
 * Use "booster" for faster start-up
 * Locally stored favorites
 * Automatic background changing, e.g. each Monday one of my favorites
