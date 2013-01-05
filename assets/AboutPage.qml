@@ -39,8 +39,8 @@ Page {
         
         Label {
             multiline: true
-            // TODO: Add link to gitorous or github.
-            text: qsTr("Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald for Kodira.\nThis program uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.")
+            // TODO: Add link to github.
+            text: qsTr("Pattern lets you set your wallpaper to beautiful patterns and colors. Written by Cornelius Hald during Kodira's Open-Source-Friday.\n\nPattern is open-source software licensed under GPLv3 and uses the COLOURlovers.com API. All patterns are licensed under CC-BY-NC-SA.")
         }
         
         Container {
