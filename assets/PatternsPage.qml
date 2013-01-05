@@ -66,7 +66,7 @@ NavigationPane {
 	                // For some reason we cannot access root.model directly from ListItemComponent. So we cache it here.
 	                property variant modelCache: root.model
 	                
-	                visible: !indicator.visible && !errorMessage.visible
+	                visible: !indicator.visible && !networkErrorMessage.visible
 	                                
 	                onCreationCompleted: {
 	                    root.model.start()
@@ -143,32 +143,69 @@ NavigationPane {
 	        
 	        
 	        Container {
-	            id: errorMessage
-	            visible: false //!app.online
+	            id: networkErrorMessage
+	            visible: false // !app.online // PROBLEM: app.online is not always right
 	            horizontalAlignment: HorizontalAlignment.Fill
 	            verticalAlignment: VerticalAlignment.Center
 	            
 		        Label {
-		            text: "Cannot connect to internet. Please make sure you have a working internet connection."
+		            text: qsTr("A network error occurred. Please make sure you have a working internet connection.")
 		            multiline: true
 		            preferredWidth: 500
     	            horizontalAlignment: HorizontalAlignment.Center
 		        }
 		        
 	            Button {
-		            text: "Open network settings"
+		            text: qsTr("Open network settings")
 		            preferredWidth: 500
     	            horizontalAlignment: HorizontalAlignment.Center
+    	            onClicked: {
+    	                invokeNetworkSettings.trigger("bb.action.OPEN")
+    	            }
+    	            attachedObjects: [
+    	                Invocation {
+                            id: invokeNetworkSettings
+                            query: InvokeQuery {
+                                invokeTargetId: "sys.settings.target"
+                                mimeType: "settings/view"
+                                uri: "settings://networkconnections"
+                            }
+                        }
+    	            ]
 		        }
 		        
 		        Button {
-		            text: "Try again"
+		            text: qsTr("Try again")
 		            preferredWidth: 500
     	            horizontalAlignment: HorizontalAlignment.Center
-    	            onClicked: root.model.start()
+    	            onClicked: {
+    	                networkErrorMessage.visible = false
+    	                root.model.start()
+    	            }
 		        }
 	        }
 	    }
 	}
+
+    // Connecting signals to display network errors
+    // INFO: The reason why app.online does not always work is because
+    //       our app needs to be in forground to receive those signals.
+    //       We could check for a network connection after each time the app wakes up
+    onCreationCompleted: {
+        root.model.networkError.connect(showNetworkError)
+        app.onlineChanged.connect(onOnlineStateChanged)
+    }
+    
+    function showNetworkError() {
+        networkErrorMessage.visible = true
+    }
+    
+    function onOnlineStateChanged() {
+        if (app.online) {
+            console.log("XXX QML -- APP is online")
+            networkErrorMessage.visible = false
+            root.model.start()
+        }
+    }
 }
 

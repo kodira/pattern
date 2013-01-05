@@ -138,8 +138,6 @@ void ListModel::loadData()
         return;
     }
     
-    // TODO: Cancel old request if sill there.
-
 	setLoading(true);
 
 	qDebug() << "INFO: Doing network request";
@@ -159,7 +157,9 @@ void ListModel::loadData()
     if (m_reply->error() == QNetworkReply::NoError) {
     	connect(m_reply, SIGNAL(finished()), this, SLOT(requestFinished()));
     } else {
-    	// TODO: What do we do on error?
+    	m_reply->deleteLater();
+    	m_reply = 0;
+    	emit networkError();
     }
 }
 
@@ -168,8 +168,9 @@ void ListModel::requestFinished()
     qDebug() << "INFO: Request finished";
     if (m_reply->error() != QNetworkReply::NoError) {
         qDebug() << "ERROR: Network error";
-        // TODO: Emit error and to show note on screen
         m_reply->deleteLater();
+        m_reply = 0;
+        emit networkError();
         return;
     }
 

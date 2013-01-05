@@ -54,6 +54,7 @@ signals:
     void resultsChanged();
     void typeChanged();
     void categoryChanged();
+    void networkError();
     
 public slots:
     void loadData();
