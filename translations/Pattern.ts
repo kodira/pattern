@@ -57,6 +57,18 @@ Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.c
         <source>Newest</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>A network error occurred. Please make sure you have a working internet connection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open network settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>main</name>

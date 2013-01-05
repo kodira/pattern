@@ -96,6 +96,18 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
         <source>Load next page</source>
         <translation type="obsolete">Nächste Seite laden</translation>
     </message>
+    <message>
+        <source>A network error occurred. Please make sure you have a working internet connection.</source>
+        <translation>Ein Netzwerkfehler ist aufgetreten. Bitte stellen Sie sicher, dass die Internetverbindung funktioniert. </translation>
+    </message>
+    <message>
+        <source>Open network settings</source>
+        <translation>Netwerkeinstellungen öffnen</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Nochmal versuchen</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
