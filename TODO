@@ -29,3 +29,5 @@
 * Better handling of the offline situation. We could use app.online but enhance it so after each wake-up the app checks
   its online state. Because while sleeping the app receives no signals.
   With this change we could use a global overlay that informs the user that he needs to be online.
+* Make image display faster. The list scrolls a bit jerky. Hoever using Container with tile background does not work because it has specific size requirements.
+
