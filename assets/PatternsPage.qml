@@ -151,13 +151,13 @@ NavigationPane {
 		        Label {
 		            text: qsTr("A network error occurred. Please make sure you have a working internet connection.")
 		            multiline: true
-		            preferredWidth: 500
+		            preferredWidth: 600
     	            horizontalAlignment: HorizontalAlignment.Center
 		        }
 		        
 	            Button {
 		            text: qsTr("Open network settings")
-		            preferredWidth: 500
+		            preferredWidth: 600
     	            horizontalAlignment: HorizontalAlignment.Center
     	            onClicked: {
     	                invokeNetworkSettings.trigger("bb.action.OPEN")
@@ -176,7 +176,7 @@ NavigationPane {
 		        
 		        Button {
 		            text: qsTr("Try again")
-		            preferredWidth: 500
+		            preferredWidth: 600
     	            horizontalAlignment: HorizontalAlignment.Center
     	            onClicked: {
     	                networkErrorMessage.visible = false
