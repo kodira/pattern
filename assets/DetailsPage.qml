@@ -33,7 +33,6 @@ Page {
         img.visible = false
     }
     
-    
     actions: [ 
         ActionItem {
             title: qsTr("As Wallpaper")
@@ -101,13 +100,22 @@ Page {
             opacity: 0.5
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Top
-            preferredHeight: 180
+            preferredHeight: containerLayout.layoutFrame.height
+            preferredWidth: containerLayout.layoutFrame.width
         }
         
         Container {
             layout: StackLayout {}
-            topPadding: 20
+            topPadding: 15
+            bottomPadding: 25
             leftPadding: 20
+            rightPadding: 20
+
+            attachedObjects: [
+                LayoutUpdateHandler {
+                    id: containerLayout
+                }
+            ]
 
             Label {
                 text: root.pattern ? root.pattern.title : ""
