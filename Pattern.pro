@@ -3,7 +3,7 @@ TARGET = Pattern
 
 QT += opengl
 CONFIG += qt warn_on debug_and_release cascades
-LIBS += -lbbplatform -lbbsystem
+LIBS += -lbbplatform -lbbsystem -lbbdevice 
 
 INCLUDEPATH += ../src
 SOURCES += ../src/*.cpp
