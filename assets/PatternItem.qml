@@ -51,7 +51,7 @@ Container {
     }
     
     Container {
-        preferredHeight: 70
+        preferredHeight: containerLayout.layoutFrame.height
         background: Color.Black
         opacity: 0.5
         verticalAlignment: VerticalAlignment.Bottom
@@ -60,12 +60,19 @@ Container {
     
     Container {
         layout: DockLayout {}
-        preferredHeight: 70
         verticalAlignment: VerticalAlignment.Bottom
         horizontalAlignment: HorizontalAlignment.Fill
         leftPadding: 20
+        rightPadding: 20
+        topPadding: 10
         bottomPadding: 10
-        
+
+        attachedObjects: [
+            LayoutUpdateHandler {
+                id: containerLayout
+            }
+        ]
+
         Label {
             visible: !isLoading
             text: ListItemData.title + " " + qsTr("by") + " " + ListItemData.userName
