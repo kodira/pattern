@@ -23,6 +23,7 @@
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/AbstractPane>
 #include <bb/system/InvokeTargetReply>
+#include <bb/device/DisplayInfo>
 #include <QNetworkConfigurationManager>
 
 #include "listmodel.h"
@@ -195,7 +196,11 @@ void App::downloadFinished()
 
 	m_tile.loadFromData(reply->readAll());
 
-	QImage image = Helper::createImageFromTile(m_tile, 768, 1280);
+	bb::device::DisplayInfo display;
+    int screenWidth = display.pixelSize().width();
+    int screenHeight = display.pixelSize().height();
+
+	QImage image = Helper::createImageFromTile(m_tile, screenWidth, screenHeight);
 
 	qDebug() << "INFO: Big image height" << image.height();
 	qDebug() << "INFO: Big image width" << image.width();
