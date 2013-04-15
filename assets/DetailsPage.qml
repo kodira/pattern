@@ -101,7 +101,7 @@ Page {
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Top
             preferredHeight: containerLayout.layoutFrame.height
-            preferredWidth: containerLayout.layoutFrame.width
+            //preferredWidth: containerLayout.layoutFrame.width
         }
         
         Container {
