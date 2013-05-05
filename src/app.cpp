@@ -23,8 +23,11 @@
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/AbstractPane>
 #include <bb/system/InvokeTargetReply>
+#include <bb/cascades/Invocation>
+#include <bb/cascades/InvokeQuery>
 #include <bb/device/DisplayInfo>
 #include <QNetworkConfigurationManager>
+#include <QUrl>
 
 #include "listmodel.h"
 #include "qmlremoteimage.h"
@@ -122,59 +125,46 @@ void App::onWallpaperFinished(const QUrl &url, int result)
 	m_toast.show();
 }
 
-//
-// This code currently only shares via BBM-Groups. I think it should work for other
-// channels (like Bluetooth) as well, but it doesn't (Gold SDK).
-// As a work around we're using createWallpaperForSharing() together with wallpaperUrl()
-// from QML.
-//
-// I've also tried using QImage as QVariant and using the "data" property of InvokeActionItem
-// but also without success. However the work around works fine for now.
-//
 void App::shareWallpaper()
 {
-    //QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
     m_bigImageCache.save("./data/wallpaper.png");
 
-    QString path = QDir::current().absoluteFilePath("data/wallpaper.png");
-    qDebug() << "ABS path:" << path;
+    QUrl url = QUrl::fromLocalFile(QDir::current().absoluteFilePath("data/wallpaper.png"));
 
-    bb::system::InvokeRequest request;
-    request.setMimeType("image/png");
-    request.setAction("bb.action.SHARE");
-    request.setUri(QUrl::fromLocalFile(path));
-    //request.setMetadata(""); // map
-    bb::system::InvokeTargetReply *reply = m_invokeManager.invoke(request);
-    connect(reply, SIGNAL(finished()), this, SLOT(onInvokationFinished()));
+    Invocation *invocation = Invocation::create(
+    		InvokeQuery::create().parent(this).mimeType("image/png").uri(url));
+
+    QObject::connect(invocation, SIGNAL(armed()), this, SLOT(onShareInvocationArmed()));
+    // Deletes the invocation once it finished
+    QObject::connect(invocation, SIGNAL(finished()), invocation, SLOT(deleteLater()));
 }
 
-void App::createWallpaperForSharing()
+void App::onShareInvocationArmed()
 {
-	//QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
-	m_bigImageCache.save("./data/wallpaper.png");
+	Invocation *invocation = qobject_cast<Invocation*>(sender());
+	invocation->trigger("bb.action.SHARE");
 }
 
-QUrl App::wallpaperUrl()
+// Should open the image in image editor. Currently not working.
+void App::openWallpaper()
 {
-	// The URL never changes during runtime, but hardcoding it into QML is still no good
-	// idea. So we're doing it here.
-	QString path = QDir::current().absoluteFilePath("data/wallpaper.png");
-    return QUrl::fromLocalFile(path);
+    m_bigImageCache.save("./data/wallpaper.png");
+
+    QUrl url = QUrl::fromLocalFile(QDir::current().absoluteFilePath("data/wallpaper.png"));
+
+    Invocation *invocation = Invocation::create(
+    		InvokeQuery::create().parent(this).mimeType("image/png").uri(url));
+
+    QObject::connect(invocation, SIGNAL(armed()), this, SLOT(onOpenInvocationArmed()));
+    // Deletes the invocation once it finished
+    QObject::connect(invocation, SIGNAL(finished()), invocation, SLOT(deleteLater()));
 }
 
-// Currently not in use. See shareWallpaper()
-void App::onInvokationFinished()
+// Should open the image in image editor. Currently not working.
+void App::onOpenInvocationArmed()
 {
-	qDebug() << "INFO: Invokation finished";
-
-	bb::system::InvokeTargetReply *reply = (bb::system::InvokeTargetReply*) sender();
-
-	if (reply->error() != 0) {
-		m_toast.setBody("ERROR: " + QString::number(reply->error()));
-		m_toast.show();
-	}
-
-	reply->deleteLater();
+	Invocation *invocation = qobject_cast<Invocation*>(sender());
+	invocation->trigger("bb.action.OPEN");
 }
 
 void App::createBigImage(QUrl url)

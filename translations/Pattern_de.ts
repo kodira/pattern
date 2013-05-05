@@ -56,43 +56,74 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
     <name>DetailsPage</name>
     <message>
         <source>As Wallpaper</source>
-        <translation>Als Hintergrund</translation>
+        <translation type="unfinished">Als Hintergrund</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="obsolete">Teilen</translation>
+        <translation type="unfinished">Teilen</translation>
     </message>
     <message>
         <source>by</source>
-        <translation>von</translation>
+        <translation type="unfinished">von</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Editieren</translation>
+        <translation type="unfinished">Editieren</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation type="obsolete">Speichern</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
     <message>
         <source>Noise</source>
-        <translation>Rauschen</translation>
+        <translation type="obsolete">Rauschen</translation>
     </message>
     <message>
         <source>Vignetting</source>
-        <translation>Vignettierung</translation>
+        <translation type="obsolete">Vignettierung</translation>
     </message>
     <message>
         <source>Fills</source>
-        <translation>Füllung</translation>
+        <translation type="obsolete">Füllung</translation>
     </message>
     <message>
         <source>Outlines</source>
-        <translation>Umriss</translation>
+        <translation type="obsolete">Umriss</translation>
+    </message>
+</context>
+<context>
+    <name>EditSheet</name>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Editieren</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Speichern</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>Noise</source>
+        <translation type="unfinished">Rauschen</translation>
+    </message>
+    <message>
+        <source>Vignetting</source>
+        <translation type="unfinished">Vignettierung</translation>
+    </message>
+    <message>
+        <source>Fills</source>
+        <translation type="unfinished">Füllung</translation>
+    </message>
+    <message>
+        <source>Outlines</source>
+        <translation type="unfinished">Umriss</translation>
     </message>
 </context>
 <context>

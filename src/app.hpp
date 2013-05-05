@@ -48,8 +48,7 @@ public:
     bool online();
     Q_INVOKABLE void setWallpaper();
     Q_INVOKABLE void shareWallpaper();
-    Q_INVOKABLE void createWallpaperForSharing();
-    Q_INVOKABLE QUrl wallpaperUrl();
+    Q_INVOKABLE void openWallpaper();
     Q_INVOKABLE void createBigImage(QUrl url);
     Q_INVOKABLE void applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, float opacityC, float opacityD);
 
@@ -65,7 +64,8 @@ private:
 
 private slots:
 	void onWallpaperFinished(const QUrl &url, int result);
-	void onInvokationFinished();
+	void onShareInvocationArmed();
+	void onOpenInvocationArmed();
 	void downloadFinished();
 	void onOnlineStateChanged(bool state);
 
