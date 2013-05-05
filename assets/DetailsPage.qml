@@ -157,6 +157,31 @@ Page {
             id: editSheet
 
             content: Page {
+                
+                titleBar: TitleBar {
+                    title: qsTr("Edit")
+                    
+                    acceptAction: ActionItem {
+                        title: qsTr("Save")
+                        onTriggered: {
+                            activityIndicator.start() // Currently not working probably because applyEffect() is blocking
+
+                            var o1 = imgOverlay1.visible ? imgOverlay1.opacity : 0
+                            var o2 = imgOverlay2.visible ? imgOverlay2.opacity : 0
+                            var o3 = imgOverlay3.visible ? imgOverlay3.opacity : 0
+                            var o4 = imgOverlay4.visible ? imgOverlay4.opacity : 0
+
+                            app.applyEffect(img2.viewableArea, img2.contentScale, o1, o2, o3, o4)
+                            activityIndicator.stop()
+                            editSheet.close()
+                        }
+                    }
+                    
+                    dismissAction: ActionItem {
+                        title: qsTr("Cancel")
+                        onTriggered: editSheet.close()
+                    }
+                }
 
                 Container {
                     layout: DockLayout {}
@@ -225,38 +250,6 @@ Page {
 						verticalAlignment: VerticalAlignment.Fill
                         overlapTouchPolicy: OverlapTouchPolicy.Allow
 
-                        Container {
-                            layout: StackLayout {
-                                orientation: LayoutOrientation.LeftToRight
-                            }
-
-                            background: Color.create(0, 0, 0, 0.5)
-
-                            horizontalAlignment: HorizontalAlignment.Center
-                            verticalAlignment: VerticalAlignment.Top
-
-                            Button {
-                                text: "Cancel"
-                                onClicked: editSheet.close()
-                            }
-
-                            Button {
-                                text: "Save"
-                                onClicked: {
-                                    activityIndicator.start() // Currently not working probably because applyEffect() is blocking
-                                    
-                                    var o1 = imgOverlay1.visible ? imgOverlay1.opacity : 0
-                                    var o2 = imgOverlay2.visible ? imgOverlay2.opacity : 0
-                                    var o3 = imgOverlay3.visible ? imgOverlay3.opacity : 0
-                                    var o4 = imgOverlay4.visible ? imgOverlay4.opacity : 0
-
-                                    app.applyEffect(img2.viewableArea, img2.contentScale, o1, o2, o3, o4)
-                                    activityIndicator.stop()
-                                    editSheet.close()
-                                }
-                            }
-                        }
-
 						Container {
                             layout: DockLayout {}
                             horizontalAlignment: HorizontalAlignment.Fill
@@ -319,8 +312,7 @@ Page {
 	
 	                                CheckButton {
 	                                    id: ckBut1
-	                                    text: "Noise"
-	                                	rightMargin: 50
+	                                    text: qsTr("Noise")
 	                                	onActiveChanged: {
 	                                    	if (active) {
 	                                    	    ckBut2.active = false
@@ -333,8 +325,7 @@ Page {
 	
 	                                CheckButton {
 	                                    id: ckBut2
-	                                    text: "Vignetting"
-	                                    rightMargin: 50
+	                                    text: qsTr("Vignetting")
 	                                    onActiveChanged: {
 	                                        if (active) {
 	                                            ckBut1.active = false
@@ -347,8 +338,7 @@ Page {
 	
 	                                CheckButton {
 	                                    id: ckBut3
-	                                    text: "Fills"
-	                                    rightMargin: 50
+	                                    text: qsTr("Fills")
 	                                    onActiveChanged: {
 	                                        if (active) {
 	                                            ckBut1.active = false
@@ -361,8 +351,7 @@ Page {
 	
 	                                CheckButton {
 	                                    id: ckBut4
-	                                    text: "Outlines"
-	                                    rightMargin: 50
+	                                    text: qsTr("Outlines")
 	                                    onActiveChanged: {
 	                                        if (active) {
 	                                            ckBut1.active = false

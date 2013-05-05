@@ -39,6 +39,30 @@ Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.c
         <source>by</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vignetting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fills</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outlines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PatternItem</name>

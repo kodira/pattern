@@ -6,7 +6,7 @@ Container {
 	property bool active: false
 	property alias text: label.text
 
-	preferredWidth: 250
+	preferredWidth: 300
 	
     layout: DockLayout {}
     

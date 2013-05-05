@@ -21,6 +21,8 @@
 == 1.1.0 ==
 * [OK] Performance improvements for scrolling the list
 * [OK] Basic image editing. Zooming & Overlays
+* Editing an edited image adds more and more effects. We should keep the original somewhere and use that.
+* Share button is jumpy. We should implement our own action (as originally planned)
 
 == Future versions ==
 * Add caching of tiles for usage in ListView and especially to prevent redownloading in DetailsView. The cache could simply cache URL/tile pairs. If the URL is not in cache we fetch the tile online. This could also be used for offline favorites, etc. We just need a flag to pin the cache entry. Non-pinned entries get delted after some time.
