@@ -53,6 +53,7 @@ Page {
         
         ActionItem {
             title: qsTr("Edit")
+            imageSource: "asset:///images/edit.png"
             ActionBar.placement: ActionBarPlacement.OnBar
             onTriggered: {
                 editSheet.open()
@@ -179,7 +180,7 @@ Page {
 	                
 	                ImageView {
 	                    id: imgOverlay1
-	                    visible: slider.visible
+	                    visible: ckBut1.checked
 	                    imageSource: "images/effect1.png"
 	                    overlapTouchPolicy: OverlapTouchPolicy.Allow
                         horizontalAlignment: HorizontalAlignment.Fill
@@ -188,7 +189,7 @@ Page {
 
                     ImageView {
                         id: imgOverlay2
-                        visible: slider.visible
+                        visible: ckBut2.checked
                         imageSource: "images/effect2.png"
                         overlapTouchPolicy: OverlapTouchPolicy.Allow
                         horizontalAlignment: HorizontalAlignment.Fill
@@ -197,7 +198,7 @@ Page {
 
                     ImageView {
                         id: imgOverlay3
-                        visible: slider.visible
+                        visible: ckBut3.checked
                         imageSource: "images/effect3.png"
                         overlapTouchPolicy: OverlapTouchPolicy.Allow
                         horizontalAlignment: HorizontalAlignment.Fill
@@ -206,7 +207,7 @@ Page {
 
                     ImageView {
                         id: imgOverlay4
-                        visible: slider.visible
+                        visible: ckBut4.checked
                         imageSource: "images/effect4.png"
                         overlapTouchPolicy: OverlapTouchPolicy.Allow
                         horizontalAlignment: HorizontalAlignment.Fill
@@ -252,110 +253,111 @@ Page {
                         }
 
 						Container {
-                            layout: StackLayout {}
-                            background: Color.create(0, 0, 0, 0.5)
+                            layout: DockLayout {}
+                            //background: Color.create(0, 0, 0, 0.5)
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Bottom
-                            leftPadding: 40
-                            rightPadding: 40
+                            preferredHeight: 250
 
                             Slider {
 	                            id: slider
-	                            visible: tBut1.checked || tBut2.checked || tBut3.checked || tBut4.checked
+	                            visible: ckBut1.active || ckBut2.active || ckBut3.active || ckBut4.active
 	                            fromValue: 0
 	                            toValue: 1
 	                            value: 0.5
 	                            horizontalAlignment: HorizontalAlignment.Fill
-	                            topPadding: 20
+	                            verticalAlignment: VerticalAlignment.Top
+	                            
 	                            onImmediateValueChanged: {
-	                                if (tBut1.checked) {
+	                                if (ckBut1.active) {
 	                                    imgOverlay1.opacity = immediateValue
 	                                    return
 	                                }
-	                                if (tBut2.checked) {
+	                                if (ckBut2.active) {
 	                                    imgOverlay2.opacity = immediateValue
 	                                    return
 	                                }
-	                                if (tBut3.checked) {
+	                                if (ckBut3.active) {
 	                                    imgOverlay3.opacity = immediateValue
 	                                    return
 	                                }
-	                                if (tBut4.checked) {
+	                                if (ckBut4.active) {
 	                                    imgOverlay4.opacity = immediateValue
 	                                    return
 	                                }
                              	}
 	                        }
+                            
+                            Container {
+                                preferredHeight: 100
+                                background: Color.create("#ff252525")
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                verticalAlignment: VerticalAlignment.Bottom
+                            }
 	
 	                        Container {
 	                            layout: StackLayout {
 	                                orientation: LayoutOrientation.LeftToRight
 	                            }
-	                            
-	                            topPadding: 20
-	                            bottomPadding: 20
-	
-	                            horizontalAlignment: HorizontalAlignment.Fill
-	
-	                            ImageToggleButton {
-	                                id: tBut1
-	                                imageSourceDefault: "images/toggle_unchecked.png"
-	                                imageSourceChecked: "images/toggle_checked.png"
-	                                rightMargin: 50
-	                                onCheckedChanged: {
-	                                    if (checked) {
-	                                        tBut2.checked = false
-	                                        tBut3.checked = false
-	                                        tBut4.checked = false
-	                                        slider.value = imgOverlay1.opacity
-	                                    }
-	                                }
-	                            }
-	                            
-	                            ImageToggleButton {
-	                                id: tBut2
-	                                imageSourceDefault: "images/toggle_unchecked.png"
-	                                imageSourceChecked: "images/toggle_checked.png"
-	                                rightMargin: 50
-	                                onCheckedChanged: {
-	                                    if (checked) {
-	                                        tBut1.checked = false
-	                                        tBut3.checked = false
-	                                        tBut4.checked = false
+
+                                horizontalAlignment: HorizontalAlignment.Fill
+                                verticalAlignment: VerticalAlignment.Bottom
+
+                                CheckButton {
+                                    id: ckBut1
+                                    text: "Noise"
+                                	rightMargin: 50
+                                	onActiveChanged: {
+                                    	if (active) {
+                                    	    ckBut2.active = false
+                                    	    ckBut3.active = false
+                                    	    ckBut4.active = false
+                                            slider.value = imgOverlay1.opacity
+                                        }
+                                    }
+                                }
+
+                                CheckButton {
+                                    id: ckBut2
+                                    text: "Vignetting"
+                                    rightMargin: 50
+                                    onActiveChanged: {
+                                        if (active) {
+                                            ckBut1.active = false
+                                            ckBut3.active = false
+                                            ckBut4.active = false
                                             slider.value = imgOverlay2.opacity
                                         }
-	                                }
-	                            }
-	                            
-	                            ImageToggleButton {
-	                                id: tBut3
-	                                imageSourceDefault: "images/toggle_unchecked.png"
-	                                imageSourceChecked: "images/toggle_checked.png"
-	                                rightMargin: 50
-	                                onCheckedChanged: {
-	                                    if (checked) {
-	                                        tBut1.checked = false
-	                                        tBut2.checked = false
-	                                        tBut4.checked = false
+                                    }
+                                }
+
+                                CheckButton {
+                                    id: ckBut3
+                                    text: "Fills"
+                                    rightMargin: 50
+                                    onActiveChanged: {
+                                        if (active) {
+                                            ckBut1.active = false
+                                            ckBut2.active = false
+                                            ckBut4.active = false
                                             slider.value = imgOverlay3.opacity
                                         }
-	                                }
-	                            }
-	                            
-	                            ImageToggleButton {
-	                                id: tBut4
-	                                imageSourceDefault: "images/toggle_unchecked.png"
-	                                imageSourceChecked: "images/toggle_checked.png"
-	                                rightMargin: 50
-	                                onCheckedChanged: {
-	                                    if (checked) {
-	                                        tBut1.checked = false
-	                                        tBut2.checked = false
-	                                        tBut3.checked = false
+                                    }
+                                }
+
+                                CheckButton {
+                                    id: ckBut4
+                                    text: "Outlines"
+                                    rightMargin: 50
+                                    onActiveChanged: {
+                                        if (active) {
+                                            ckBut1.active = false
+                                            ckBut2.active = false
+                                            ckBut3.active = false
                                             slider.value = imgOverlay4.opacity
                                         }
-	                                }
-	                            }
+                                    }
+                                }
 	                        }
 	                    }
 		            }
