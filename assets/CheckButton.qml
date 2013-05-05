@@ -8,7 +8,6 @@ Container {
 
 	preferredWidth: 250
 	
-    //background: Color.Green
     layout: DockLayout {}
     
     ImageView {
@@ -21,9 +20,9 @@ Container {
     Container {
         horizontalAlignment: HorizontalAlignment.Center
         verticalAlignment: VerticalAlignment.Top
-        topPadding: 50
         touchPropagationMode: TouchPropagationMode.None // Don't propagate touch to checkbox. Handled by outer container
-        
+        topPadding: 50
+
         CheckBox {
 	        id: checkBox
 	    }
@@ -32,10 +31,9 @@ Container {
     Container {
         horizontalAlignment: HorizontalAlignment.Center
         verticalAlignment: VerticalAlignment.Top
-        topPadding: 100
-        //overlapTouchPolicy: OverlapTouchPolicy.Allow
         touchPropagationMode: TouchPropagationMode.None
-        
+        topPadding: 100
+
         Label {
             id: label
 	        textStyle.fontSize: FontSize.Small
