@@ -56,7 +56,7 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
     <name>DetailsPage</name>
     <message>
         <source>As Wallpaper</source>
-        <translation>Als Hintergrund</translation>
+        <translation type="unfinished">Als Hintergrund</translation>
     </message>
     <message>
         <source>Share</source>
@@ -64,7 +64,11 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
     </message>
     <message>
         <source>by</source>
-        <translation>von</translation>
+        <translation type="unfinished">von</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

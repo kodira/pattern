@@ -66,11 +66,20 @@ QImage Helper::createImageFromTile(QImage tile, int width, int height)
 
 bb::cascades::Image Helper::convertImage(QImage image)
 {
+	QTime t;
+	t.start();
     // Convert QImage into byte array to create a Cascades::Image
+	// Cascades Image only knows about PNG, JPG and GIF. We use JPG, because
+	// PNG is about 10 times slower.
     QByteArray ba;
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "PNG");
+    image.save(&buffer, "JPG", -1);
+    qDebug() << "T Save image to buffer:" << t.restart();
 
-    return bb::cascades::Image(ba);
+    bb::cascades::Image convImage(ba);
+    qDebug() << "T Create casc image:" << t.restart();
+
+    return convImage;
+    //return bb::cascades::Image(ba);
 }

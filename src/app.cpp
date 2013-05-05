@@ -87,9 +87,9 @@ void App::setWallpaper()
         filename = "wallpaper_b.png";
     }
 
-    QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
+    //QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
 
-	if (!img.save("./data/" + filename , "PNG")) {
+	if (!m_bigImageCache.save("./data/" + filename , "PNG")) {
 		qDebug() << "ERROR: Cannot save wallpaper to storage";
 		m_toast.setBody("ERROR: Could not save wallpaper storage");
 		m_toast.show();
@@ -133,8 +133,8 @@ void App::onWallpaperFinished(const QUrl &url, int result)
 //
 void App::shareWallpaper()
 {
-    QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
-    img.save("./data/wallpaper.png");
+    //QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
+    m_bigImageCache.save("./data/wallpaper.png");
 
     QString path = QDir::current().absoluteFilePath("data/wallpaper.png");
     qDebug() << "ABS path:" << path;
@@ -150,8 +150,8 @@ void App::shareWallpaper()
 
 void App::createWallpaperForSharing()
 {
-	QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
-	img.save("./data/wallpaper.png");
+	//QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
+	m_bigImageCache.save("./data/wallpaper.png");
 }
 
 QUrl App::wallpaperUrl()
@@ -205,6 +205,7 @@ void App::downloadFinished()
 	qDebug() << "INFO: Big image height" << image.height();
 	qDebug() << "INFO: Big image width" << image.width();
 
+	m_bigImageCache = image;
 	bb::cascades::Image cimg = Helper::convertImage(image);
 	setBigImage(cimg);
 
@@ -223,4 +224,71 @@ void App::onOnlineStateChanged(bool state)
 		m_online = state;
 		emit onlineChanged();
 	}
+}
+
+void App::applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, float opacityC, float opacityD)
+{
+	qDebug() << "Rect:" << rect;
+	qDebug() << "Zoom:" << zoom;
+	qDebug() << "opacityA:" << opacityA;
+	qDebug() << "opacityB:" << opacityB;
+	qDebug() << "opacityC:" << opacityC;
+	qDebug() << "opacityD:" << opacityD;
+
+	QTime t;
+	t.start();
+
+	bb::device::DisplayInfo display;
+	int screenWidth = display.pixelSize().width();
+	int screenHeight = display.pixelSize().height();
+
+	QRectF targetRect(0, 0, screenWidth, screenHeight);
+	QRectF sourceRect(rect.x() / zoom, rect.y() / zoom, rect.width(), rect.height());
+
+	QImage resultImage(QSize(768, 1280), QImage::Format_ARGB32_Premultiplied);
+
+	QImage baseImage = Helper::createImageFromTile(m_tile, screenWidth, screenHeight);
+	baseImage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+	QDir imageDir = QDir::current();
+	imageDir.cd("app/native/assets/images");
+
+	QImage overlay1(imageDir.absoluteFilePath("effect1.png"));
+	overlay1.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+	QImage overlay2(imageDir.absoluteFilePath("effect2.png"));
+	overlay2.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+	QImage overlay3(imageDir.absoluteFilePath("effect3.png"));
+	overlay3.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+	QImage overlay4(imageDir.absoluteFilePath("effect4.png"));
+	overlay4.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+	qDebug() << "T loading images:" << t.elapsed();
+	t.restart();
+
+	QPainter p(&resultImage);
+	p.drawImage(targetRect, baseImage, sourceRect);
+	p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+	p.setOpacity(opacityA);
+	p.drawImage(0,0, overlay1);
+	p.setOpacity(opacityB);
+	p.drawImage(0,0, overlay2);
+	p.setOpacity(opacityC);
+	p.drawImage(0,0, overlay3);
+	p.setOpacity(opacityD);
+	p.drawImage(0,0, overlay4);
+	p.end();
+
+	qDebug() << "T drawing final image:" << t.elapsed();
+	t.restart();
+
+	m_bigImageCache = resultImage;
+
+	bb::cascades::Image cimg = Helper::convertImage(resultImage);
+	setBigImage(cimg);
+
+	qDebug() << "T converting final image:" << t.elapsed();
+	t.restart();
 }

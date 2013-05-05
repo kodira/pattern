@@ -22,7 +22,9 @@ import bb.cascades 1.0
 Page {
     id: root
     property variant pattern
-    
+
+    actionBarVisibility: ChromeVisibility.Overlay
+
     function loadPattern() {
         indicator.running = true
         app.createBigImage(pattern.patternUrl)
@@ -48,6 +50,15 @@ Page {
             onTriggered: app.shareWallpaper()
         },
         */
+        
+        ActionItem {
+            title: qsTr("Edit")
+            ActionBar.placement: ActionBarPlacement.OnBar
+            onTriggered: {
+                editSheet.open()
+            }
+        },
+        
         InvokeActionItem {
             ActionBar.placement: ActionBarPlacement.OnBar
                         
@@ -88,10 +99,9 @@ Page {
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
             image: app.bigImage
-            
             onImageChanged: {
                 indicator.running = false
-                visible = true
+                img.visible = true
             }
         }
         
@@ -140,4 +150,227 @@ Page {
             verticalAlignment: VerticalAlignment.Fill
         }
     }
+    
+    attachedObjects: [
+        Sheet {
+            id: editSheet
+
+            content: Page {
+
+                Container {
+                    layout: DockLayout {}
+	                
+	                ScrollView {
+	                    id: img2
+	                    horizontalAlignment: HorizontalAlignment.Fill
+	                    verticalAlignment: VerticalAlignment.Fill
+	
+	                    scrollViewProperties {
+	                        scrollMode: ScrollMode.Both
+	                        pinchToZoomEnabled: true
+	                        minContentScale: 1.0
+	                        maxContentScale: 4.0
+	                    }
+	
+	                    ImageView {
+	                        image: app.bigImage
+	                    }
+	                }
+	                
+	                ImageView {
+	                    id: imgOverlay1
+	                    visible: slider.visible
+	                    imageSource: "images/effect1.png"
+	                    overlapTouchPolicy: OverlapTouchPolicy.Allow
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                    }
+
+                    ImageView {
+                        id: imgOverlay2
+                        visible: slider.visible
+                        imageSource: "images/effect2.png"
+                        overlapTouchPolicy: OverlapTouchPolicy.Allow
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                    }
+
+                    ImageView {
+                        id: imgOverlay3
+                        visible: slider.visible
+                        imageSource: "images/effect3.png"
+                        overlapTouchPolicy: OverlapTouchPolicy.Allow
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                    }
+
+                    ImageView {
+                        id: imgOverlay4
+                        visible: slider.visible
+                        imageSource: "images/effect4.png"
+                        overlapTouchPolicy: OverlapTouchPolicy.Allow
+                        horizontalAlignment: HorizontalAlignment.Fill
+                        verticalAlignment: VerticalAlignment.Fill
+                    }
+
+                    // UI-Controls
+					Container {
+						layout: DockLayout {}
+						horizontalAlignment: HorizontalAlignment.Fill
+						verticalAlignment: VerticalAlignment.Fill
+                        overlapTouchPolicy: OverlapTouchPolicy.Allow
+
+                        Container {
+                            layout: StackLayout {
+                                orientation: LayoutOrientation.LeftToRight
+                            }
+
+                            background: Color.create(0, 0, 0, 0.5)
+
+                            horizontalAlignment: HorizontalAlignment.Center
+                            verticalAlignment: VerticalAlignment.Top
+
+                            Button {
+                                text: "Cancel"
+                                onClicked: editSheet.close()
+                            }
+
+                            Button {
+                                text: "Save"
+                                onClicked: {
+                                    activityIndicator.start() // Currently not working probably because applyEffect() is blocking
+                                    app.applyEffect(img2.viewableArea,
+                                        	img2.contentScale,
+                                        	imgOverlay1.opacity,
+                                        	imgOverlay2.opacity,
+                                        	imgOverlay3.opacity,
+                                        	imgOverlay4.opacity)
+                                    activityIndicator.stop()
+                                    editSheet.close()
+                                }
+                            }
+                        }
+
+						Container {
+                            layout: StackLayout {}
+                            background: Color.create(0, 0, 0, 0.5)
+                            horizontalAlignment: HorizontalAlignment.Fill
+                            verticalAlignment: VerticalAlignment.Bottom
+                            leftPadding: 40
+                            rightPadding: 40
+
+                            Slider {
+	                            id: slider
+	                            visible: tBut1.checked || tBut2.checked || tBut3.checked || tBut4.checked
+	                            fromValue: 0
+	                            toValue: 1
+	                            value: 0.5
+	                            horizontalAlignment: HorizontalAlignment.Fill
+	                            topPadding: 20
+	                            onImmediateValueChanged: {
+	                                if (tBut1.checked) {
+	                                    imgOverlay1.opacity = immediateValue
+	                                    return
+	                                }
+	                                if (tBut2.checked) {
+	                                    imgOverlay2.opacity = immediateValue
+	                                    return
+	                                }
+	                                if (tBut3.checked) {
+	                                    imgOverlay3.opacity = immediateValue
+	                                    return
+	                                }
+	                                if (tBut4.checked) {
+	                                    imgOverlay4.opacity = immediateValue
+	                                    return
+	                                }
+                             	}
+	                        }
+	
+	                        Container {
+	                            layout: StackLayout {
+	                                orientation: LayoutOrientation.LeftToRight
+	                            }
+	                            
+	                            topPadding: 20
+	                            bottomPadding: 20
+	
+	                            horizontalAlignment: HorizontalAlignment.Fill
+	
+	                            ImageToggleButton {
+	                                id: tBut1
+	                                imageSourceDefault: "images/toggle_unchecked.png"
+	                                imageSourceChecked: "images/toggle_checked.png"
+	                                rightMargin: 50
+	                                onCheckedChanged: {
+	                                    if (checked) {
+	                                        tBut2.checked = false
+	                                        tBut3.checked = false
+	                                        tBut4.checked = false
+	                                        slider.value = imgOverlay1.opacity
+	                                    }
+	                                }
+	                            }
+	                            
+	                            ImageToggleButton {
+	                                id: tBut2
+	                                imageSourceDefault: "images/toggle_unchecked.png"
+	                                imageSourceChecked: "images/toggle_checked.png"
+	                                rightMargin: 50
+	                                onCheckedChanged: {
+	                                    if (checked) {
+	                                        tBut1.checked = false
+	                                        tBut3.checked = false
+	                                        tBut4.checked = false
+                                            slider.value = imgOverlay2.opacity
+                                        }
+	                                }
+	                            }
+	                            
+	                            ImageToggleButton {
+	                                id: tBut3
+	                                imageSourceDefault: "images/toggle_unchecked.png"
+	                                imageSourceChecked: "images/toggle_checked.png"
+	                                rightMargin: 50
+	                                onCheckedChanged: {
+	                                    if (checked) {
+	                                        tBut1.checked = false
+	                                        tBut2.checked = false
+	                                        tBut4.checked = false
+                                            slider.value = imgOverlay3.opacity
+                                        }
+	                                }
+	                            }
+	                            
+	                            ImageToggleButton {
+	                                id: tBut4
+	                                imageSourceDefault: "images/toggle_unchecked.png"
+	                                imageSourceChecked: "images/toggle_checked.png"
+	                                rightMargin: 50
+	                                onCheckedChanged: {
+	                                    if (checked) {
+	                                        tBut1.checked = false
+	                                        tBut2.checked = false
+	                                        tBut3.checked = false
+                                            slider.value = imgOverlay4.opacity
+                                        }
+	                                }
+	                            }
+	                        }
+	                    }
+		            }
+
+                    ActivityIndicator {
+                        id: activityIndicator
+                        running: false
+                        visible: running
+                        preferredWidth: 200.0
+                        preferredHeight: 200.0
+                        horizontalAlignment: HorizontalAlignment.Center
+                        verticalAlignment: VerticalAlignment.Center
+                    }
+                }
+            }
+        }
+    ]
 }

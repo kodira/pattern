@@ -51,11 +51,13 @@ public:
     Q_INVOKABLE void createWallpaperForSharing();
     Q_INVOKABLE QUrl wallpaperUrl();
     Q_INVOKABLE void createBigImage(QUrl url);
+    Q_INVOKABLE void applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, float opacityC, float opacityD);
 
 private:
     QImage m_tile;
     bool m_online;
     bb::cascades::Image m_bigImage;
+    QImage m_bigImageCache; // Same as m_bigImage but as QImage
     bb::platform::HomeScreen m_homeScreen;
     bb::system::SystemToast m_toast;
     bb::system::InvokeManager m_invokeManager;

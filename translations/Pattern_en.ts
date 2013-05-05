@@ -32,6 +32,10 @@ Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.c
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>by</source>
         <translation type="unfinished"></translation>
     </message>
