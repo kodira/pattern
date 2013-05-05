@@ -181,6 +181,7 @@ Page {
 	                ImageView {
 	                    id: imgOverlay1
 	                    visible: ckBut1.checked
+	                    opacity: 0.5
 	                    imageSource: "images/effect1.png"
 	                    overlapTouchPolicy: OverlapTouchPolicy.Allow
                         horizontalAlignment: HorizontalAlignment.Fill
@@ -190,6 +191,7 @@ Page {
                     ImageView {
                         id: imgOverlay2
                         visible: ckBut2.checked
+                        opacity: 0.5
                         imageSource: "images/effect2.png"
                         overlapTouchPolicy: OverlapTouchPolicy.Allow
                         horizontalAlignment: HorizontalAlignment.Fill
@@ -199,6 +201,7 @@ Page {
                     ImageView {
                         id: imgOverlay3
                         visible: ckBut3.checked
+                        opacity: 0.5
                         imageSource: "images/effect3.png"
                         overlapTouchPolicy: OverlapTouchPolicy.Allow
                         horizontalAlignment: HorizontalAlignment.Fill
@@ -208,6 +211,7 @@ Page {
                     ImageView {
                         id: imgOverlay4
                         visible: ckBut4.checked
+                        opacity: 0.5
                         imageSource: "images/effect4.png"
                         overlapTouchPolicy: OverlapTouchPolicy.Allow
                         horizontalAlignment: HorizontalAlignment.Fill
@@ -240,12 +244,13 @@ Page {
                                 text: "Save"
                                 onClicked: {
                                     activityIndicator.start() // Currently not working probably because applyEffect() is blocking
-                                    app.applyEffect(img2.viewableArea,
-                                        	img2.contentScale,
-                                        	imgOverlay1.opacity,
-                                        	imgOverlay2.opacity,
-                                        	imgOverlay3.opacity,
-                                        	imgOverlay4.opacity)
+                                    
+                                    var o1 = imgOverlay1.visible ? imgOverlay1.opacity : 0
+                                    var o2 = imgOverlay2.visible ? imgOverlay2.opacity : 0
+                                    var o3 = imgOverlay3.visible ? imgOverlay3.opacity : 0
+                                    var o4 = imgOverlay4.visible ? imgOverlay4.opacity : 0
+
+                                    app.applyEffect(img2.viewableArea, img2.contentScale, o1, o2, o3, o4)
                                     activityIndicator.stop()
                                     editSheet.close()
                                 }
@@ -254,10 +259,9 @@ Page {
 
 						Container {
                             layout: DockLayout {}
-                            //background: Color.create(0, 0, 0, 0.5)
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Bottom
-                            preferredHeight: 250
+                            preferredHeight: 280
 
                             Slider {
 	                            id: slider
@@ -289,75 +293,86 @@ Page {
 	                        }
                             
                             Container {
-                                preferredHeight: 100
-                                background: Color.create("#ff252525")
+                                layout: DockLayout {}
                                 horizontalAlignment: HorizontalAlignment.Fill
                                 verticalAlignment: VerticalAlignment.Bottom
-                            }
-	
-	                        Container {
-	                            layout: StackLayout {
-	                                orientation: LayoutOrientation.LeftToRight
+
+                                Container {
+                                    layout: DockLayout {}
+                                    horizontalAlignment: HorizontalAlignment.Fill
+	                                verticalAlignment: VerticalAlignment.Fill
+	                                topPadding: 40 // Margin not possible here so we add this container with extra padding
+	                                
+	                                Container {
+                                        background: Color.create("#ff252525")
+                                        horizontalAlignment: HorizontalAlignment.Fill
+                                        verticalAlignment: VerticalAlignment.Fill
+                                    }
 	                            }
-
-                                horizontalAlignment: HorizontalAlignment.Fill
-                                verticalAlignment: VerticalAlignment.Bottom
-
-                                CheckButton {
-                                    id: ckBut1
-                                    text: "Noise"
-                                	rightMargin: 50
-                                	onActiveChanged: {
-                                    	if (active) {
-                                    	    ckBut2.active = false
-                                    	    ckBut3.active = false
-                                    	    ckBut4.active = false
-                                            slider.value = imgOverlay1.opacity
-                                        }
-                                    }
-                                }
-
-                                CheckButton {
-                                    id: ckBut2
-                                    text: "Vignetting"
-                                    rightMargin: 50
-                                    onActiveChanged: {
-                                        if (active) {
-                                            ckBut1.active = false
-                                            ckBut3.active = false
-                                            ckBut4.active = false
-                                            slider.value = imgOverlay2.opacity
-                                        }
-                                    }
-                                }
-
-                                CheckButton {
-                                    id: ckBut3
-                                    text: "Fills"
-                                    rightMargin: 50
-                                    onActiveChanged: {
-                                        if (active) {
-                                            ckBut1.active = false
-                                            ckBut2.active = false
-                                            ckBut4.active = false
-                                            slider.value = imgOverlay3.opacity
-                                        }
-                                    }
-                                }
-
-                                CheckButton {
-                                    id: ckBut4
-                                    text: "Outlines"
-                                    rightMargin: 50
-                                    onActiveChanged: {
-                                        if (active) {
-                                            ckBut1.active = false
-                                            ckBut2.active = false
-                                            ckBut3.active = false
-                                            slider.value = imgOverlay4.opacity
-                                        }
-                                    }
-                                }
+		
+		                        Container {
+		                            layout: StackLayout {
+		                                orientation: LayoutOrientation.LeftToRight
+		                            }
+	                                horizontalAlignment: HorizontalAlignment.Fill
+	                                verticalAlignment: VerticalAlignment.Bottom
+	
+	                                CheckButton {
+	                                    id: ckBut1
+	                                    text: "Noise"
+	                                	rightMargin: 50
+	                                	onActiveChanged: {
+	                                    	if (active) {
+	                                    	    ckBut2.active = false
+	                                    	    ckBut3.active = false
+	                                    	    ckBut4.active = false
+	                                            slider.value = imgOverlay1.opacity
+	                                        }
+	                                    }
+	                                }
+	
+	                                CheckButton {
+	                                    id: ckBut2
+	                                    text: "Vignetting"
+	                                    rightMargin: 50
+	                                    onActiveChanged: {
+	                                        if (active) {
+	                                            ckBut1.active = false
+	                                            ckBut3.active = false
+	                                            ckBut4.active = false
+	                                            slider.value = imgOverlay2.opacity
+	                                        }
+	                                    }
+	                                }
+	
+	                                CheckButton {
+	                                    id: ckBut3
+	                                    text: "Fills"
+	                                    rightMargin: 50
+	                                    onActiveChanged: {
+	                                        if (active) {
+	                                            ckBut1.active = false
+	                                            ckBut2.active = false
+	                                            ckBut4.active = false
+	                                            slider.value = imgOverlay3.opacity
+	                                        }
+	                                    }
+	                                }
+	
+	                                CheckButton {
+	                                    id: ckBut4
+	                                    text: "Outlines"
+	                                    rightMargin: 50
+	                                    onActiveChanged: {
+	                                        if (active) {
+	                                            ckBut1.active = false
+	                                            ckBut2.active = false
+	                                            ckBut3.active = false
+	                                            slider.value = imgOverlay4.opacity
+	                                        }
+	                                    }
+	                                }
+		                        }
 	                        }
 	                    }
 		            }
