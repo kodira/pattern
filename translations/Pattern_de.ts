@@ -36,6 +36,18 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
         <source>Setting wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot save to device. Permissions are missing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DetailSheet</name>
@@ -76,7 +88,7 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
     </message>
     <message>
         <source>Save</source>
-        <translation type="obsolete">Speichern</translation>
+        <translation type="unfinished">Speichern</translation>
     </message>
     <message>
         <source>Cancel</source>

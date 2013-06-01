@@ -85,6 +85,12 @@ Page {
         
         // TODO: Is it possible to write to protected_media/wallpapers? probably not, but check.
         // We could do "Export to Wallpapers".
+        ActionItem {
+            title: qsTr("Save")
+            imageSource: "asset:///images/save.png"
+            ActionBar.placement: ActionBarPlacement.InOverflow
+            onTriggered: app.saveWallpaper(pattern.id)
+        },
         
         ActionItem {
             title: qsTr("Share")

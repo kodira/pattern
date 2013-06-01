@@ -63,6 +63,7 @@ public:
     Q_INVOKABLE void createBigImage(QUrl url);
     Q_INVOKABLE void resetEditImage();
     Q_INVOKABLE void applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, float opacityC, float opacityD);
+    Q_INVOKABLE void saveWallpaper(QString title);
 
 private:
     QImage m_tile;

@@ -297,3 +297,40 @@ void App::applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, f
 	qDebug() << "TIME converting final image:" << t.elapsed();
 	t.restart();
 }
+
+void App::saveWallpaper(QString title)
+{
+	// Retrieve the path to the app's working directory
+	QDir dir = QDir::current();
+
+	if (!dir.cd("shared/photos")) {
+		qDebug() << "ERROR: Cannot open shared/pictures. Permissions missing.";
+		m_toast.setBody(tr("Cannot save to device. Permissions are missing."));
+		m_toast.show();
+		return;
+	}
+
+	m_toast.setBody(tr("Saving image"));
+	m_toast.show();
+
+	if (!dir.cd("Pattern")) {
+		dir.mkdir("Pattern");
+		dir.cd("Pattern");
+	}
+
+	if (title.isEmpty()) {
+		title = "Unknown";
+	}
+
+	title = "Pattern_" + title;
+	QString path = dir.absoluteFilePath(title + ".png");
+
+	// TODO: Here we could check if the file already exists.
+	// If yes, add number to title
+
+	m_bigImageCache.save(path);
+	m_toast.setBody(tr("Image successfully saved"));
+	m_toast.cancel();
+	m_toast.show();
+}
+
