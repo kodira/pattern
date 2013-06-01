@@ -23,38 +23,32 @@ Sheet {
     id: root
     
     property bool canceled: false
-    property alias viewableArea: mainImg.viewableArea
-    property alias contentScale: mainImg.contentScale
-    property alias o1: imgOverlay1.opacity
-    property alias o2: imgOverlay2.opacity
-    property alias o3: imgOverlay3.opacity
-    property alias o4: imgOverlay4.opacity
     
     // Function to restore the previous state
     // Currently a bit slow due to image loading.
-    function restoreState(viewableArea, contentScale, o1, o2, o3, o4) {
-        if (o1 > 0) {
-            imgOverlay1.opacity = o1
-            ckBut1.checked = true
-        }
-        
-        if (o2 > 0) {
-            imgOverlay2.opacity = o2
-            ckBut2.checked = true
-        }
-        
-        if (o3 > 0) {
-            imgOverlay3.opacity = o3
-            ckBut3.checked = true
-        }
-        
-        if (o4 > 0) {
-            imgOverlay4.opacity = o4
-            ckBut4.checked = true
-        }
+    function restoreState(state) {
+        // If saved opacity is 0, set the new opacity to 0.5, but keep the overlay invisible
+        imgOverlay1.opacity = state.o1 == 0 ? 0.5 : state.o1
+        imgOverlay2.opacity = state.o2 == 0 ? 0.5 : state.o2
+        imgOverlay3.opacity = state.o3 == 0 ? 0.5 : state.o3
+        imgOverlay4.opacity = state.o4 == 0 ? 0.5 : state.o4
 
+        ckBut1.checked = state.o1 > 0
+        ckBut2.checked = state.o2 > 0
+        ckBut3.checked = state.o3 > 0
+        ckBut4.checked = state.o4 > 0
+        
 		// Works somehow but is not very precise
-        mainImg.zoomToRect(viewableArea, ScrollAnimation.None)
+        mainImg.zoomToRect(state.viewableArea, ScrollAnimation.None)
+    }
+    
+    function getState(state) {
+        state.o1 = imgOverlay1.visible ? imgOverlay1.opacity : 0
+        state.o2 = imgOverlay2.visible ? imgOverlay2.opacity : 0
+        state.o3 = imgOverlay3.visible ? imgOverlay3.opacity : 0
+        state.o4 = imgOverlay4.visible ? imgOverlay4.opacity : 0
+        state.viewableArea = mainImg.viewableArea
+        state.contentScale = mainImg.contentScale
     }
 
     content: Page {
@@ -66,7 +60,11 @@ Sheet {
                 title: qsTr("Apply")
                 onTriggered: {
                     activityIndicator.start() // Currently not working probably because applyEffect() is blocking
-                    app.applyEffect(viewableArea, contentScale, o1, o2, o3, o4)
+                    var tmpO1 = imgOverlay1.visible ? imgOverlay1.opacity : 0
+                    var tmpO2 = imgOverlay2.visible ? imgOverlay2.opacity : 0
+                    var tmpO3 = imgOverlay3.visible ? imgOverlay3.opacity : 0
+                    var tmpO4 = imgOverlay4.visible ? imgOverlay4.opacity : 0
+                    app.applyEffect(mainImg.viewableArea, mainImg.contentScale, tmpO1, tmpO2, tmpO3, tmpO4)
                     activityIndicator.stop()
                     root.close()
                 }
@@ -115,7 +113,7 @@ Sheet {
             ImageView {
                 id: imgOverlay1
                 visible: ckBut1.checked
-                opacity: visible ? 0.5 : 0
+                opacity: 0.5
                 imageSource: "images/effect1.png"
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -125,7 +123,7 @@ Sheet {
             ImageView {
                 id: imgOverlay2
                 visible: ckBut2.checked
-                opacity: visible ? 0.5 : 0
+                opacity: 0.5
                 imageSource: "images/effect2.png"
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -135,7 +133,7 @@ Sheet {
             ImageView {
                 id: imgOverlay3
                 visible: ckBut3.checked
-                opacity: visible ? 0.5 : 0
+                opacity: 0.5
                 imageSource: "images/effect3.png"
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -145,7 +143,7 @@ Sheet {
             ImageView {
                 id: imgOverlay4
                 visible: ckBut4.checked
-                opacity: visible ? 0.5 : 0
+                opacity: 0.5
                 imageSource: "images/effect4.png"
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
                 horizontalAlignment: HorizontalAlignment.Fill

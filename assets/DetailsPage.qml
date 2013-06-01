@@ -46,12 +46,19 @@ Page {
         ActionItem {
             // Those properties are used persist data while EditSheet is destroyed
             property bool savedState: false
-            property variant viewableArea
-            property real contentScale
-            property real o1
-            property real o2
-            property real o3
-            property real o4
+            
+            attachedObjects: [
+                // Container for passing data between this page and EditSheet
+                QtObject {
+                    id: state
+                    property real o1
+                    property real o2
+                    property real o3
+                    property real o4
+                    property variant viewableArea
+                    property real contentScale
+                }
+            ]
 
             title: qsTr("Edit")
             imageSource: "asset:///images/edit.png"
@@ -63,19 +70,14 @@ Page {
                 
                 // If we have a saved state, restore it
                 if (savedState) {
-                	editSheet.restoreState(viewableArea, contentScale, o1, o2, o3, o4)
+                	editSheet.restoreState(state)
                 }
                 
                 // If the sheet gets closed. Save the state and destroy it
                 editSheet.closed.connect(function() {
                     if (!editSheet.canceled) {
 	                    savedState = true
-	                    viewableArea = editSheet.viewableArea
-                        contentScale = editSheet.contentScale
-                        o1 = editSheet.o1
-	                    o2 = editSheet.o2
-	                    o3 = editSheet.o3
-	                    o4 = editSheet.o4
+	                    editSheet.getState(state)
                     }
                     console.log("INFO: Destroying sheet: " + editSheet)
                     editSheet.destroy()
