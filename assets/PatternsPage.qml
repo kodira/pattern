@@ -18,6 +18,7 @@
  */
 
 import bb.cascades 1.0
+import "."
 
 NavigationPane {
     id: root
@@ -28,6 +29,15 @@ NavigationPane {
     // Caching
     property int page: model.page
     property int results: model.results
+    
+    onPopTransitionEnded: {
+        // We need to destroy the details page here, because we always
+        // create a new page once the user taps a pattern.
+        if (page.objectName === "detailsPage") {
+            console.log("INFO: DetailsPage destroyed")
+            page.destroy()
+        }
+    }
 
     Page {
 	    Container {
@@ -97,9 +107,10 @@ NavigationPane {
 	                onTriggered: {
 	                    var chosenItem = dataModel.data(indexPath);
 	                    console.log(chosenItem.patternUrl);
-	                    
-	                    var page = detailsPageDefinition.createObject();
-	                    page.pattern = chosenItem;
+
+	                    var	page = detailsPageDefinition.createObject();
+                        page.objectName = "detailsPage"
+                        page.pattern = chosenItem;
 	                    page.loadPattern();
                         root.push(page);
 	                }
@@ -165,7 +176,7 @@ NavigationPane {
     	            attachedObjects: [
     	                Invocation {
                             id: invokeNetworkSettings
-                            query: InvokeQuery {
+                            query {
                                 invokeTargetId: "sys.settings.target"
                                 mimeType: "settings/view"
                                 uri: "settings://networkconnections"

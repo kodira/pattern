@@ -94,7 +94,7 @@ void App::setWallpaper()
 
 	if (!m_bigImageCache.save("./data/" + filename , "PNG")) {
 		qDebug() << "ERROR: Cannot save wallpaper to storage";
-		m_toast.setBody("ERROR: Could not save wallpaper storage");
+		m_toast.setBody("ERROR: Could not save wallpaper to storage");
 		m_toast.show();
 		return;
 	}
@@ -164,7 +164,7 @@ void App::openWallpaper()
 void App::onOpenInvocationArmed()
 {
 	Invocation *invocation = qobject_cast<Invocation*>(sender());
-	invocation->trigger("bb.action.OPEN");
+	invocation->trigger("bb.action.EDIT");
 }
 
 void App::createBigImage(QUrl url)
@@ -200,6 +200,22 @@ void App::downloadFinished()
 	setBigImage(cimg);
 
 	reply->deleteLater();
+}
+
+void App::resetBigImage()
+{
+	bb::device::DisplayInfo display;
+	int screenWidth = display.pixelSize().width();
+	int screenHeight = display.pixelSize().height();
+
+	QImage image = Helper::createImageFromTile(m_tile, screenWidth, screenHeight);
+
+	qDebug() << "INFO: Big image height" << image.height();
+	qDebug() << "INFO: Big image width" << image.width();
+
+	m_bigImageCache = image;
+	bb::cascades::Image cimg = Helper::convertImage(image);
+	setBigImage(cimg);
 }
 
 bool App::online()

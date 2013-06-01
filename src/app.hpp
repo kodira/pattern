@@ -50,6 +50,7 @@ public:
     Q_INVOKABLE void shareWallpaper();
     Q_INVOKABLE void openWallpaper();
     Q_INVOKABLE void createBigImage(QUrl url);
+    Q_INVOKABLE void resetBigImage();
     Q_INVOKABLE void applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, float opacityC, float opacityD);
 
 private:

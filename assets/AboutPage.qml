@@ -22,7 +22,7 @@ import bb.cascades 1.0
 Page {
     titleBar: TitleBar {
         title : "Pattern and Color Wallpapers"
-        branded: TriBool.False
+        //branded: TriBool.False
     }
     
     Container {
@@ -57,7 +57,7 @@ Page {
                 attachedObjects: [
                     Invocation {
 	                    id: invoke
-	                    query: InvokeQuery {
+	                    query {
 	                        invokeTargetId: "sys.browser"
 	                        uri: "http://kodira.de"
 	                    }
@@ -72,7 +72,7 @@ Page {
                 attachedObjects: [
                     Invocation {
 	                    id: invoke2
-	                    query: InvokeQuery {
+	                    query {
 	                        invokeTargetId: "sys.appworld"
 	                        uri: "appworld://vendor/41217"
 	                    }

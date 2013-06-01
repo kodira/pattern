@@ -73,7 +73,7 @@ Page {
                     attachedObjects: [
                         Invocation {
                             id: invoke
-                            query: InvokeQuery {
+                            query {
                                 invokeTargetId: "sys.browser"
                                 uri: "http://kodira.de"
                             }
@@ -88,7 +88,7 @@ Page {
                     attachedObjects: [
                         Invocation {
                             id: invoke2
-                            query: InvokeQuery {
+                            query {
                                 invokeTargetId: "sys.appworld"
                                 uri: "appworld://vendor/41217"
                             }

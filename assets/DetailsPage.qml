@@ -46,29 +46,37 @@ Page {
         ActionItem {
             title: qsTr("Edit")
             imageSource: "asset:///images/edit.png"
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: ActionBarPlacement.InOverflow
             onTriggered: {
+                app.resetBigImage()
                 var editSheet = editSheetDefinition.createObject()
                 editSheet.open()
+                editSheet.closed.connect(function() {
+                    console.log("INFO: Destroying sheet: " + editSheet)
+                    editSheet.destroy()
+                })
             }
         },
+        
+        // TODO: Is it possible to write to protected_media/wallpapers? probably not, but check.
+        // We could do "Export to Wallpapers".
         
         ActionItem {
             title: qsTr("Share")
             imageSource: "asset:///images/share.png"
-            ActionBar.placement: ActionBarPlacement.OnBar
+            ActionBar.placement: ActionBarPlacement.InOverflow
             onTriggered: app.shareWallpaper()
         }//,
 
         /* Should open image in image viewer - but does not find a target currently. Gold SDK */
-        /*
-        ActionItem {
-            title: "Open in editor"
-            imageSource: "asset:///images/share.png"
-            ActionBar.placement: ActionBarPlacement.OnBar
-            onTriggered: app.openWallpaper()
-        }
-        */
+        
+//        ActionItem {
+//            title: "Open in editor"
+//            imageSource: "asset:///images/share.png"
+//            ActionBar.placement: ActionBarPlacement.OnBar
+//            onTriggered: app.openWallpaper()
+//        }
+        
     ]
             
     Container {

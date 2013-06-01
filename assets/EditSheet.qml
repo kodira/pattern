@@ -50,8 +50,7 @@ Sheet {
         }
 
         Container {
-            layout: DockLayout {
-            }
+            layout: DockLayout {}
 
             ScrollView {
                 id: img2
@@ -112,15 +111,13 @@ Sheet {
 
             // UI-Controls
             Container {
-                layout: DockLayout {
-                }
+                layout: DockLayout {}
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
 
                 Container {
-                    layout: DockLayout {
-                    }
+                    layout: DockLayout {}
                     horizontalAlignment: HorizontalAlignment.Fill
                     verticalAlignment: VerticalAlignment.Bottom
                     preferredHeight: 280
@@ -155,14 +152,12 @@ Sheet {
                     }
 
                     Container {
-                        layout: DockLayout {
-                        }
+                        layout: DockLayout {}
                         horizontalAlignment: HorizontalAlignment.Fill
                         verticalAlignment: VerticalAlignment.Bottom
 
                         Container {
-                            layout: DockLayout {
-                            }
+                            layout: DockLayout {}
                             horizontalAlignment: HorizontalAlignment.Fill
                             verticalAlignment: VerticalAlignment.Fill
                             topPadding: 40 // Margin not possible here so we add this container with extra padding
