@@ -24,6 +24,10 @@ Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.c
         <source>Wallpaper successfully set</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Setting wallpaper</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DetailsPage</name>
@@ -51,10 +55,6 @@ Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.c
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -72,6 +72,10 @@ Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.c
     </message>
     <message>
         <source>Outlines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

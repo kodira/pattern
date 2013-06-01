@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Cornelius Hald <cornelius.hald@kodira.de>
+ * Copyright (C) 2013 Cornelius Hald <cornelius.hald@kodira.de>
  *
  * This file is part of Pattern.
  *
@@ -105,7 +105,7 @@ void QmlRemoteImage::abortRequest()
 
 void QmlRemoteImage::myPreferredWidthChanged(float width)
 {
-	qDebug() << "INFO: Layout, myPreferredWidthChanged " << width;
+	//qDebug() << "INFO: Layout, myPreferredWidthChanged " << width;
 
 	if (width > 0 && isPreferredHeightSet()) {
 		updateImageFromTile();
@@ -114,7 +114,7 @@ void QmlRemoteImage::myPreferredWidthChanged(float width)
 
 void QmlRemoteImage::myPreferredHeightChanged(float height)
 {
-	qDebug() << "INFO: Layout, myPreferredHeightChanged " << height;
+	//qDebug() << "INFO: Layout, myPreferredHeightChanged " << height;
 
 	if (height > 0 && isPreferredWidthSet()) {
 		updateImageFromTile();

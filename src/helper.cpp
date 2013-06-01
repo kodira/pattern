@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Cornelius Hald <cornelius.hald@kodira.de>
+ * Copyright (C) 2013 Cornelius Hald <cornelius.hald@kodira.de>
  *
  * This file is part of Pattern.
  *
@@ -21,11 +21,6 @@
 
 #include <QPainter>
 #include <QBrush>
-#include <QDebug>
-
-/*
- * TODO: Rename to Helper
- */
 
 QNetworkAccessManager* Helper::m_netManager = 0;
 
@@ -66,8 +61,6 @@ QImage Helper::createImageFromTile(QImage tile, int width, int height)
 
 bb::cascades::Image Helper::convertImage(QImage image)
 {
-	QTime t;
-	t.start();
     // Convert QImage into byte array to create a Cascades::Image
 	// Cascades Image only knows about PNG, JPG and GIF. We use JPG, because
 	// PNG is about 10 times slower.
@@ -75,11 +68,5 @@ bb::cascades::Image Helper::convertImage(QImage image)
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);
     image.save(&buffer, "JPG", -1);
-    qDebug() << "T Save image to buffer:" << t.restart();
-
-    bb::cascades::Image convImage(ba);
-    qDebug() << "T Create casc image:" << t.restart();
-
-    return convImage;
-    //return bb::cascades::Image(ba);
+    return bb::cascades::Image(ba);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Cornelius Hald <cornelius.hald@kodira.de>
+ * Copyright (C) 2013 Cornelius Hald <cornelius.hald@kodira.de>
  *
  * This file is part of Pattern.
  *
@@ -50,6 +50,11 @@ App::App()
 
     m_online = m_networkConfigManager.isOnline();
 
+    // Set size of screen
+    bb::device::DisplayInfo display;
+    m_displayWidth = display.pixelSize().width();
+    m_displayHeight = display.pixelSize().height();
+
     connect(&m_homeScreen, SIGNAL(wallpaperFinished(const QUrl&, int)), this, SLOT(onWallpaperFinished(const QUrl&, int)));
     connect(&m_networkConfigManager, SIGNAL(onlineStateChanged(bool)), this, SLOT(onOnlineStateChanged(bool)));
 
@@ -68,10 +73,32 @@ void App::setBigImage(bb::cascades::Image image)
 	emit bigImageChanged();
 }
 
+bb::cascades::Image App::editImage()
+{
+	return m_editImage;
+}
+
+void App::setEditImage(bb::cascades::Image image)
+{
+	m_editImage = image;
+	emit editImageChanged();
+}
+
+int App::displayWidth()
+{
+	return m_displayWidth;
+}
+
+int App::displayHeight()
+{
+	return m_displayHeight;
+}
+
 void App::setWallpaper()
 {
 	qDebug() << "Saving as wallpaper";
-	//QImage img;// = pattern->createQImage(768, 1280);
+	m_toast.setBody(tr("Setting wallpaper"));
+	m_toast.show();
 
     // Everytime we switch wallpapers we switch between wallpaper_a.png and wallpaper_b.png as
     // filenames. We have to do this because the setWallpaper() API does not change wallpapers
@@ -89,8 +116,6 @@ void App::setWallpaper()
     } else {
         filename = "wallpaper_b.png";
     }
-
-    //QImage img = Helper::createImageFromTile(m_tile, 768, 1280);
 
 	if (!m_bigImageCache.save("./data/" + filename , "PNG")) {
 		qDebug() << "ERROR: Cannot save wallpaper to storage";
@@ -122,6 +147,7 @@ void App::onWallpaperFinished(const QUrl &url, int result)
 		m_toast.setBody("ERROR: Could not set wallpaper");
 	}
 
+	m_toast.cancel();
 	m_toast.show();
 }
 
@@ -186,15 +212,7 @@ void App::downloadFinished()
 
 	m_tile.loadFromData(reply->readAll());
 
-	bb::device::DisplayInfo display;
-    int screenWidth = display.pixelSize().width();
-    int screenHeight = display.pixelSize().height();
-
-	QImage image = Helper::createImageFromTile(m_tile, screenWidth, screenHeight);
-
-	qDebug() << "INFO: Big image height" << image.height();
-	qDebug() << "INFO: Big image width" << image.width();
-
+	QImage image = Helper::createImageFromTile(m_tile, m_displayWidth, m_displayHeight);
 	m_bigImageCache = image;
 	bb::cascades::Image cimg = Helper::convertImage(image);
 	setBigImage(cimg);
@@ -202,20 +220,12 @@ void App::downloadFinished()
 	reply->deleteLater();
 }
 
-void App::resetBigImage()
+void App::resetEditImage()
 {
-	bb::device::DisplayInfo display;
-	int screenWidth = display.pixelSize().width();
-	int screenHeight = display.pixelSize().height();
-
-	QImage image = Helper::createImageFromTile(m_tile, screenWidth, screenHeight);
-
-	qDebug() << "INFO: Big image height" << image.height();
-	qDebug() << "INFO: Big image width" << image.width();
-
+	QImage image = Helper::createImageFromTile(m_tile, m_displayWidth, m_displayHeight);
 	m_bigImageCache = image;
 	bb::cascades::Image cimg = Helper::convertImage(image);
-	setBigImage(cimg);
+	setEditImage(cimg);
 }
 
 bool App::online()
@@ -234,26 +244,15 @@ void App::onOnlineStateChanged(bool state)
 
 void App::applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, float opacityC, float opacityD)
 {
-	qDebug() << "Rect:" << rect;
-	qDebug() << "Zoom:" << zoom;
-	qDebug() << "opacityA:" << opacityA;
-	qDebug() << "opacityB:" << opacityB;
-	qDebug() << "opacityC:" << opacityC;
-	qDebug() << "opacityD:" << opacityD;
-
 	QTime t;
 	t.start();
 
-	bb::device::DisplayInfo display;
-	int screenWidth = display.pixelSize().width();
-	int screenHeight = display.pixelSize().height();
-
-	QRectF targetRect(0, 0, screenWidth, screenHeight);
+	QRectF targetRect(0, 0, m_displayWidth, m_displayHeight);
 	QRectF sourceRect(rect.x() / zoom, rect.y() / zoom, rect.width(), rect.height());
 
-	QImage resultImage(QSize(768, 1280), QImage::Format_ARGB32_Premultiplied);
+	QImage resultImage(QSize(m_displayWidth, m_displayHeight), QImage::Format_ARGB32_Premultiplied);
 
-	QImage baseImage = Helper::createImageFromTile(m_tile, screenWidth, screenHeight);
+	QImage baseImage = Helper::createImageFromTile(m_tile, m_displayWidth, m_displayHeight);
 	baseImage.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
 	QDir imageDir = QDir::current();
@@ -271,7 +270,7 @@ void App::applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, f
 	QImage overlay4(imageDir.absoluteFilePath("effect4.png"));
 	overlay4.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
-	qDebug() << "T loading images:" << t.elapsed();
+	qDebug() << "TIME: loading images:" << t.elapsed();
 	t.restart();
 
 	QPainter p(&resultImage);
@@ -287,7 +286,7 @@ void App::applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, f
 	p.drawImage(0,0, overlay4);
 	p.end();
 
-	qDebug() << "T drawing final image:" << t.elapsed();
+	qDebug() << "TIME drawing final image:" << t.elapsed();
 	t.restart();
 
 	m_bigImageCache = resultImage;
@@ -295,6 +294,6 @@ void App::applyEffect(QRectF rect, float zoom, float opacityA, float opacityB, f
 	bb::cascades::Image cimg = Helper::convertImage(resultImage);
 	setBigImage(cimg);
 
-	qDebug() << "T converting final image:" << t.elapsed();
+	qDebug() << "TIME converting final image:" << t.elapsed();
 	t.restart();
 }

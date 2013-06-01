@@ -21,6 +21,41 @@ import bb.cascades 1.0
 
 Sheet {
     id: root
+    
+    property bool canceled: false
+    property alias viewableArea: mainImg.viewableArea
+    property alias contentScale: mainImg.contentScale
+    property alias o1: imgOverlay1.opacity
+    property alias o2: imgOverlay2.opacity
+    property alias o3: imgOverlay3.opacity
+    property alias o4: imgOverlay4.opacity
+    
+    // Function to restore the previous state
+    // Currently a bit slow due to image loading.
+    function restoreState(viewableArea, contentScale, o1, o2, o3, o4) {
+        if (o1 > 0) {
+            imgOverlay1.opacity = o1
+            ckBut1.checked = true
+        }
+        
+        if (o2 > 0) {
+            imgOverlay2.opacity = o2
+            ckBut2.checked = true
+        }
+        
+        if (o3 > 0) {
+            imgOverlay3.opacity = o3
+            ckBut3.checked = true
+        }
+        
+        if (o4 > 0) {
+            imgOverlay4.opacity = o4
+            ckBut4.checked = true
+        }
+
+		// Works somehow but is not very precise
+        mainImg.zoomToRect(viewableArea, ScrollAnimation.None)
+    }
 
     content: Page {
 
@@ -28,16 +63,10 @@ Sheet {
             title: qsTr("Edit")
 
             acceptAction: ActionItem {
-                title: qsTr("Save")
+                title: qsTr("Apply")
                 onTriggered: {
                     activityIndicator.start() // Currently not working probably because applyEffect() is blocking
-
-                    var o1 = imgOverlay1.visible ? imgOverlay1.opacity : 0
-                    var o2 = imgOverlay2.visible ? imgOverlay2.opacity : 0
-                    var o3 = imgOverlay3.visible ? imgOverlay3.opacity : 0
-                    var o4 = imgOverlay4.visible ? imgOverlay4.opacity : 0
-
-                    app.applyEffect(img2.viewableArea, img2.contentScale, o1, o2, o3, o4)
+                    app.applyEffect(viewableArea, contentScale, o1, o2, o3, o4)
                     activityIndicator.stop()
                     root.close()
                 }
@@ -45,7 +74,10 @@ Sheet {
 
             dismissAction: ActionItem {
                 title: qsTr("Cancel")
-                onTriggered: root.close()
+                onTriggered: {
+                    root.canceled = true
+                    root.close()
+                }
             }
         }
 
@@ -53,7 +85,7 @@ Sheet {
             layout: DockLayout {}
 
             ScrollView {
-                id: img2
+                id: mainImg
                 horizontalAlignment: HorizontalAlignment.Fill
                 verticalAlignment: VerticalAlignment.Fill
 
@@ -61,18 +93,29 @@ Sheet {
                     scrollMode: ScrollMode.Both
                     pinchToZoomEnabled: true
                     minContentScale: 1.0
-                    maxContentScale: 4.0
+                    maxContentScale: 3.5 // Higher zoom gets too ugly
                 }
 
-                ImageView {
-                    image: app.bigImage
+				Container {
+				    // This container is here to give the image a fixed size.
+				    // Needed, because the image takes some time to load so height and width are
+				    // not reliable. But in restoreState() we need fixed sizes.
+				    minWidth: app.displayWidth
+                    minHeight: app.displayHeight
+                    maxWidth: minWidth
+				    maxHeight: minHeight
+				
+	                ImageView {
+                        implicitLayoutAnimationsEnabled: false
+                        image: app.editImage
+	                }
                 }
             }
 
             ImageView {
                 id: imgOverlay1
                 visible: ckBut1.checked
-                opacity: 0.5
+                opacity: visible ? 0.5 : 0
                 imageSource: "images/effect1.png"
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -82,7 +125,7 @@ Sheet {
             ImageView {
                 id: imgOverlay2
                 visible: ckBut2.checked
-                opacity: 0.5
+                opacity: visible ? 0.5 : 0
                 imageSource: "images/effect2.png"
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -92,7 +135,7 @@ Sheet {
             ImageView {
                 id: imgOverlay3
                 visible: ckBut3.checked
-                opacity: 0.5
+                opacity: visible ? 0.5 : 0
                 imageSource: "images/effect3.png"
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
                 horizontalAlignment: HorizontalAlignment.Fill
@@ -102,7 +145,7 @@ Sheet {
             ImageView {
                 id: imgOverlay4
                 visible: ckBut4.checked
-                opacity: 0.5
+                opacity: visible ? 0.5 : 0
                 imageSource: "images/effect4.png"
                 overlapTouchPolicy: OverlapTouchPolicy.Allow
                 horizontalAlignment: HorizontalAlignment.Fill
