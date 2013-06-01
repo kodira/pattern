@@ -34,19 +34,19 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
     </message>
     <message>
         <source>Setting wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundbild wird gesetzt</translation>
     </message>
     <message>
         <source>Cannot save to device. Permissions are missing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern nicht möglich. Berechtigung fehlt.</translation>
     </message>
     <message>
         <source>Saving image</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild wird gespeichert</translation>
     </message>
     <message>
         <source>Image successfully saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild erfolgreich gespeichert</translation>
     </message>
 </context>
 <context>
@@ -72,23 +72,23 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
     <name>DetailsPage</name>
     <message>
         <source>As Wallpaper</source>
-        <translation type="unfinished">Als Hintergrund</translation>
+        <translation>Als Hintergrund</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished">Teilen</translation>
+        <translation>Teilen</translation>
     </message>
     <message>
         <source>by</source>
-        <translation type="unfinished">von</translation>
+        <translation>von</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Editieren</translation>
+        <translation>Editieren</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Speichern</translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -115,7 +115,7 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
     <name>EditSheet</name>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Editieren</translation>
+        <translation>Editieren</translation>
     </message>
     <message>
         <source>Save</source>
@@ -123,27 +123,27 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Noise</source>
-        <translation type="unfinished">Rauschen</translation>
+        <translation>Rauschen</translation>
     </message>
     <message>
         <source>Vignetting</source>
-        <translation type="unfinished">Vignettierung</translation>
+        <translation>Vignettierung</translation>
     </message>
     <message>
         <source>Fills</source>
-        <translation type="unfinished">Füllung</translation>
+        <translation>Füllung</translation>
     </message>
     <message>
         <source>Outlines</source>
-        <translation type="unfinished">Umriss</translation>
+        <translation>Umriss</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Übernehmen</translation>
     </message>
 </context>
 <context>
