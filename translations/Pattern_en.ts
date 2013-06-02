@@ -83,15 +83,15 @@ Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.c
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fills</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Outlines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clouds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rust</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

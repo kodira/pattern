@@ -245,7 +245,7 @@ Sheet {
 
                             CheckButton {
                                 id: ckBut3
-                                text: qsTr("Fills")
+                                text: qsTr("Clouds")
                                 onActiveChanged: {
                                     if (active) {
                                         ckBut1.active = false
@@ -258,7 +258,7 @@ Sheet {
 
                             CheckButton {
                                 id: ckBut4
-                                text: qsTr("Outlines")
+                                text: qsTr("Rust")
                                 onActiveChanged: {
                                     if (active) {
                                         ckBut1.active = false
