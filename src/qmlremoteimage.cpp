@@ -48,7 +48,10 @@ void QmlRemoteImage::setUrl(QUrl url)
 		if (url.isEmpty()) {
 			resetImageSource();
 		} else {
-			m_reply = Helper::networkManager()->get(QNetworkRequest(url));
+			QNetworkRequest request = QNetworkRequest(url);
+			request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+			m_reply = Helper::networkManager()->get(request);
+
 			if (m_reply->error() == QNetworkReply::NoError) {
 				connect(m_reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
 				connect(m_reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgressChanged(qint64,qint64)));
@@ -105,8 +108,6 @@ void QmlRemoteImage::abortRequest()
 
 void QmlRemoteImage::myPreferredWidthChanged(float width)
 {
-	//qDebug() << "INFO: Layout, myPreferredWidthChanged " << width;
-
 	if (width > 0 && isPreferredHeightSet()) {
 		updateImageFromTile();
 	}
@@ -114,8 +115,6 @@ void QmlRemoteImage::myPreferredWidthChanged(float width)
 
 void QmlRemoteImage::myPreferredHeightChanged(float height)
 {
-	//qDebug() << "INFO: Layout, myPreferredHeightChanged " << height;
-
 	if (height > 0 && isPreferredWidthSet()) {
 		updateImageFromTile();
 	}

@@ -195,15 +195,14 @@ void App::onOpenInvocationArmed()
 
 void App::createBigImage(QUrl url)
 {
-	qDebug() << "INFO: BigImage URL" << url;
-
-	QNetworkReply *reply = Helper::networkManager()->get(QNetworkRequest(url));
+	QNetworkRequest request = QNetworkRequest(url);
+	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+	QNetworkReply *reply = Helper::networkManager()->get(request);
 	connect(reply, SIGNAL(finished()), this, SLOT(downloadFinished()));
 }
 
 void App::downloadFinished()
 {
-	qDebug() << "INFO: Big image downloaded";
 	QNetworkReply *reply = (QNetworkReply*) sender();
 
 	if (reply->error()) {

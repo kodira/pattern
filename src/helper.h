@@ -23,6 +23,7 @@
 #include <QMutex>
 #include <QImage>
 #include <QtNetwork/QNetworkAccessManager>
+#include <QNetworkDiskCache>
 #include <bb/cascades/Image>
 
 /*!
@@ -36,9 +37,11 @@ private:
 	Helper(const Helper &); // hide copy constructor
 	Helper& operator=(const Helper &); // hide assign op
 	static QNetworkAccessManager* m_netManager;
+	static QNetworkDiskCache* m_diskCache;
 
 public:
 	static QNetworkAccessManager* networkManager();
+	static QNetworkDiskCache* diskCache();
 	static QImage createImageFromTile(QByteArray tileData, int width, int height);
 	static QImage createImageFromTile(QImage tile, int width, int height);
 	static bb::cascades::Image convertImage(QImage image);

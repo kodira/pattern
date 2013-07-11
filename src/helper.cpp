@@ -21,8 +21,10 @@
 
 #include <QPainter>
 #include <QBrush>
+#include <QNetworkDiskCache>
 
 QNetworkAccessManager* Helper::m_netManager = 0;
+QNetworkDiskCache* Helper::m_diskCache = 0;
 
 QNetworkAccessManager* Helper::networkManager()
 {
@@ -31,10 +33,37 @@ QNetworkAccessManager* Helper::networkManager()
 		mutex.lock();
 		if (!m_netManager) {
 			m_netManager = new QNetworkAccessManager();
+			m_netManager->setCache(diskCache());
 		}
 		mutex.unlock();
 	}
 	return m_netManager;
+}
+
+QNetworkDiskCache* Helper::diskCache()
+{
+	static QMutex mutex;
+
+	if (!m_diskCache) {
+		mutex.lock();
+		if (!m_diskCache) {
+			m_diskCache = new QNetworkDiskCache();
+
+			QDir dir = QDir::current();
+			if (dir.cd("data")) {
+				if (!dir.exists("Cache")) {
+					dir.mkdir("Cache");
+				}
+				dir.cd("Cache");
+				m_diskCache->setCacheDirectory(dir.absolutePath());
+			}
+
+			// Set sache size to about 50 MB which will use up to about 100 MB on disk. Not sure why...
+			m_diskCache->setMaximumCacheSize(50 * 1024 * 1024);
+		}
+		mutex.unlock();
+	}
+	return m_diskCache;
 }
 
 QImage Helper::createImageFromTile(QByteArray tileData, int width, int height)

@@ -29,13 +29,12 @@
 * [OK] Save to device (to gallery)
 
 == 1.3.0 ==
-* Bug: Pressing 'save' should not do anything if image is not completely loaded
-* Add local caching of tiles. URL->Tile Cache
+* [OK] Bug: Pressing 'save' should not do anything if image is not completely loaded
+* [OK] Add local caching of tiles to speedup loading and save bandwidth
 
 == Future versions ==
-* Add caching of tiles for usage in ListView and especially to prevent redownloading in DetailsView. The cache could simply cache URL/tile pairs. If the URL is not in cache we fetch the tile online. This could also be used for offline favorites, etc. We just need a flag to pin the cache entry. Non-pinned entries get delted after some time.
 * Use "booster" for faster start-up
-* Locally stored favorites
+* Locally stored favorites (maybe reuse/extend the caching to pin local tiles)
 * Search
 * Automatic background changing, e.g. each Monday one of my favorites
 * Only load 2nd tab when needed
