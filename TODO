@@ -25,6 +25,10 @@
 * [OK] Editing an edited image adds more and more effects. We should keep the original somewhere and use that.
 * [OK] Save to device (to gallery)
 
+== 1.2.0 ==
+* Bug: Pressing 'save' should not do anything if image is not completely loaded
+* Add local caching of tiles. URL->Tile Cache
+
 == Future versions ==
 * Add caching of tiles for usage in ListView and especially to prevent redownloading in DetailsView. The cache could simply cache URL/tile pairs. If the URL is not in cache we fetch the tile online. This could also be used for offline favorites, etc. We just need a flag to pin the cache entry. Non-pinned entries get delted after some time.
 * Use "booster" for faster start-up
