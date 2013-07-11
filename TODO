@@ -19,13 +19,16 @@
 * [OK] Update translations
 
 == 1.1.0 ==
+* [OK] Adapt to square screens (Blackberry Q10)
+
+== 1.2.0 ==
 * [OK] Performance improvements for scrolling the list
 * [OK] Basic image editing. Zooming & Overlays
 * [OK] Share button is jumpy. We should implement our own action (as originally planned)
 * [OK] Editing an edited image adds more and more effects. We should keep the original somewhere and use that.
 * [OK] Save to device (to gallery)
 
-== 1.2.0 ==
+== 1.3.0 ==
 * Bug: Pressing 'save' should not do anything if image is not completely loaded
 * Add local caching of tiles. URL->Tile Cache
 
