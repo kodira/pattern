@@ -303,6 +303,11 @@ void App::saveWallpaper(QString title)
 	// Retrieve the path to the app's working directory
 	QDir dir = QDir::current();
 
+	if (m_bigImageCache.isNull() || m_bigImageCache.width() == 0 || m_bigImageCache.height() == 0) {
+		qDebug() << "WARN: Image not yet loaded. Ignoring request to save.";
+		return;
+	}
+
 	if (!dir.cd("shared/photos")) {
 		qDebug() << "ERROR: Cannot open shared/pictures. Permissions missing.";
 		m_toast.setBody(tr("Cannot save to device. Permissions are missing."));
@@ -327,7 +332,6 @@ void App::saveWallpaper(QString title)
 
 	// TODO: Here we could check if the file already exists.
 	// If yes, add number to title
-
 	m_bigImageCache.save(path);
 	m_toast.setBody(tr("Image successfully saved"));
 	m_toast.cancel();
