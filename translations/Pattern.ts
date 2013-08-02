@@ -128,6 +128,10 @@ Pattern is open-source software licensed under GPLv3 and uses the COLOURlovers.c
         <source>Try again</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>main</name>

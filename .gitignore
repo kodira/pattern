@@ -7,3 +7,5 @@ x86/*
 *.qm
 config.pri
 .assets.index
+.device
+

@@ -25,6 +25,7 @@ NavigationPane {
     
     property string type: ""
     property variant model
+    property variant  searchModel
     
     // Caching
     property int page: model.page
@@ -40,111 +41,143 @@ NavigationPane {
     }
 
     Page {
+        
+        titleBar: TitleBar {
+            kind: TitleBarKind.FreeForm
+            kindProperties: FreeFormTitleBarKindProperties {
+
+                Container {
+                    layout: StackLayout {
+                    	orientation: LayoutOrientation.LeftToRight
+                    }
+                    horizontalAlignment: HorizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Fill
+                    leftPadding: 10
+                    rightPadding: 10
+                   
+                    SegmentedControl {
+                        id: segmented1
+                       
+                        horizontalAlignment: HorizontalAlignment.Left
+                        verticalAlignment: VerticalAlignment.Center
+                       
+                        Option {
+                            text: qsTr("Top Rated")
+                            value: "top"
+                            selected: true
+                        }
+                       
+                        Option {
+                            text: qsTr("Newest")
+                            value: "new"
+                        }
+                       
+                        onSelectedIndexChanged: {
+                            var value = segmented1.selectedValue
+                            console.debug("Selected value: " + value)
+                            root.model.category = value
+                            if (searchContainer.showSearchResults) {
+                                root.searchModel.category = value
+                            }
+                        }
+                    }
+                   
+                    ImageToggleButton {
+                        id: searchToggle
+                        imageSourceDefault: "asset:///images/search.png"
+                        imageSourceChecked: "asset:///images/search_checked.png"
+                        horizontalAlignment: HorizontalAlignment.Right
+                        verticalAlignment: VerticalAlignment.Center
+                        minWidth: 81
+                        minHeight: 81
+                    }
+                }
+                            
+	            expandableArea {
+	                content: Container {
+	                    id: searchContainer
+	                    property bool showSearchResults: false
+	                    
+                        leftPadding: 10
+                        rightPadding: 10
+                        bottomPadding: 10
+	                    
+	                    layout: StackLayout {
+                        	orientation: LayoutOrientation.LeftToRight
+                        }
+	                    
+	                    TextField {
+	                        id: searchField
+                        	horizontalAlignment: HorizontalAlignment.Fill
+                        	verticalAlignment: VerticalAlignment.Center
+                        	input.submitKey: SubmitKey.Search
+                        	input.onSubmitted: searchContainer.search()
+                        }
+	                    
+	                    Button {
+                        	text: qsTr("Search")
+                        	preferredWidth: 0
+                        	horizontalAlignment: HorizontalAlignment.Right
+                            verticalAlignment: VerticalAlignment.Center
+                            onClicked: searchContainer.search()
+                        }
+	                    
+	                    function search() {
+                            if (searchField.text != "") {
+                                root.searchModel.setSearchString(searchField.text)
+                                root.searchModel.start()
+                                showSearchResults = true
+                            }
+	                    }
+	                }
+	                
+	                indicatorVisibility: TitleBarExpandableAreaIndicatorVisibility.Hidden
+                    expanded: searchToggle.checked
+	                onExpandedChanged: {
+                        searchToggle.checked = expanded
+	                    if (expanded) {
+	                        searchField.requestFocus()
+	                    } else {
+	                        searchField.resetText()
+	                        searchContainer.showSearchResults = false
+	                    }
+	                }
+	            }
+            }
+        }
+        
 	    Container {
 	        layout: DockLayout {}
 	        
 	        Container {
-	            layout: StackLayout {}
+	            layout: DockLayout {}
 	            horizontalAlignment: HorizontalAlignment.Fill
 	            verticalAlignment: VerticalAlignment.Fill
 	            background: Color.create("#333333")
 	            
-	            SegmentedControl {
-	                id: segmented1
-	                
-	                horizontalAlignment: HorizontalAlignment.Center
-	                
-	                Option {
-	                    text: qsTr("Top Rated")
-	                    value: "top"
-	                    selected: true
-	                }
-	                
-	                Option {
-	                    text: qsTr("Newest")
-	                    value: "new"
-	                }
-	                
-	                onSelectedIndexChanged: {
-	                    var value = segmented1.selectedValue
-	                    console.debug("Selected value: " + value);
-	                    root.model.category = value;
-	                }
+	            PatternListView {
+	                dataModel: root.model
+                    visible: !searchListView.visible && !indicator.visible && !networkErrorMessage.visible
+                    parentPane: root
+                    horizontalAlignment: horizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Fill
 	            }
 	            
-	            ListView {
-	                // For some reason we cannot access root.model directly from ListItemComponent. So we cache it here.
-	                property variant modelCache: root.model
-	                
-	                visible: !indicator.visible && !networkErrorMessage.visible
-	                                
-	                onCreationCompleted: {
-	                    root.model.start()
-	                }
-	                
-	                // dataModel comming from C++
-	                dataModel: root.model
-	                
-	                listItemComponents: [
-	                    ListItemComponent {
-	                        type: "listItem"
-	                        PatternItem {
-	                            initialized: ListItem.initialized
-	                            bottomMargin: 20
-	                        }
-	                    },
-	                    ListItemComponent {
-	                        type: "listItemFooter"
-	                        PatternItem {
-	                            initialized: ListItem.initialized
-	                            bottomMargin: 20
-	                            isFooter: true
-	                            isLoading: parent.modelCache.loading
-	                        }
-	                    }
-	                ]
-	                
-	                onTriggered: {
-	                    var chosenItem = dataModel.data(indexPath);
-	                    console.log(chosenItem.patternUrl);
-
-	                    var	page = detailsPageDefinition.createObject();
-                        page.objectName = "detailsPage"
-                        page.pattern = chosenItem;
-	                    page.loadPattern();
-                        root.push(page);
-	                }
-	                
-	                function itemType(data, indexPath) {
-	                    // If we are at the bottom of the list, display footer item
-	                    if (indexPath[0] == root.model.length() - 1) {
-	                        return "listItemFooter";
-	                    }
-	                    // Else return the normal item
-	                    return "listItem";
-	                }
-	                
-	                attachedObjects: [
-		                // This handler is tracking the scroll state of the ListView.
-		                ListScrollStateHandler {
-		                    onAtEndChanged: {
-		                        if (atEnd && (root.model.length() > 0)) {
-		                            root.model.loadNextPage()
-		                        }
-		                    }
-		                },
-		                ComponentDefinition {
-	                        id: detailsPageDefinition;
-	                        source: "DetailsPage.qml"
-	                    }
-		            ]           
-	            }
+                PatternListView {
+                    id: searchListView
+                    dataModel: root.searchModel
+                    visible: searchContainer.showSearchResults && !indicator.visible && !networkErrorMessage.visible
+                    parentPane: root
+                    horizontalAlignment: horizontalAlignment.Fill
+                    verticalAlignment: VerticalAlignment.Fill
+                }
 	        }
 	        
 	        // Only show if we are loading XML and the list is completely empty
 	        ActivityIndicator {
 	            id: indicator
-	            running: root.model.loading && app.online && root.model.length() === 0 
+                running: (searchContainer.showSearchResults && app.online && root.searchModel.loading && root.seachModel.length() === 0) ||
+                		 (root.model.loading && app.online && root.model.length() === 0) 
 	            visible: running
 	            horizontalAlignment: HorizontalAlignment.Center
 	            verticalAlignment: VerticalAlignment.Center

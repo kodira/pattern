@@ -195,6 +195,10 @@ Pattern ist open-source Software unter GPLv3 Lizenz und nutzt die COLOURlovers.c
         <source>Try again</source>
         <translation>Nochmal versuchen</translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation>Suchen</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

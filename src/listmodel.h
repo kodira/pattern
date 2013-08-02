@@ -46,6 +46,8 @@ public:
     void setType(QString type);
     QString category();
     void setCategory(QString category);
+    QString searchString();
+    Q_INVOKABLE void setSearchString(QString searchString);
     Q_INVOKABLE int length();
     
 signals:
@@ -54,6 +56,7 @@ signals:
     void resultsChanged();
     void typeChanged();
     void categoryChanged();
+    void searchStringChanged();
     void networkError();
     
 public slots:
@@ -73,6 +76,7 @@ private:
     QString m_type;
     QString m_category;
     QString m_orderCol;
+    QString m_searchString;
     bool m_started;
     QNetworkReply *m_reply;
     void init();

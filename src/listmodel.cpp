@@ -54,6 +54,7 @@ void ListModel::init()
     connect(this, SIGNAL(resultsChanged()), this, SLOT(loadData()));
     connect(this, SIGNAL(typeChanged()), this, SLOT(loadData()));
     connect(this, SIGNAL(categoryChanged()), this, SLOT(loadData()));
+    connect(this, SIGNAL(searchStringChanged()), this, SLOT(loadData()));
 }
 
 bool ListModel::loading()
@@ -116,6 +117,26 @@ void ListModel::setCategory(QString category)
     }
 }
 
+QString ListModel::searchString()
+{
+	return m_searchString;
+}
+
+void ListModel::setSearchString(QString searchString)
+{
+	// Trim and replace spaces with plus
+	searchString = searchString.trimmed();
+	searchString.replace(" ", "+");
+	if (m_searchString != searchString) {
+		m_searchString = searchString;
+		m_page = 0;
+
+		clear();
+		fixSorting();
+		emit searchStringChanged();
+	}
+}
+
 void ListModel::fixSorting()
 {
     if (m_category == "top") {
@@ -142,12 +163,13 @@ void ListModel::loadData()
 
 	qDebug() << "INFO: Doing network request";
 
-    QString url = QString("http://www.colourlovers.com/api/%1/%2/?numberResults=%3&resultOffset=%4?orderCol=%5&sortBy=DESC")
+    QString url = QString("http://www.colourlovers.com/api/%1/%2/?numberResults=%3&resultOffset=%4?orderCol=%5&sortBy=DESC&keywords=%6")
             .arg(m_type)
             .arg(m_category)
             .arg(m_results)
             .arg(m_results * m_page)
-            .arg(m_orderCol);
+            .arg(m_orderCol)
+            .arg(m_searchString);
     
     qDebug() << "INFO: Request:" << url;
 
@@ -251,8 +273,10 @@ void ListModel::loadNextPage()
 
 void ListModel::start()
 {
-    m_started = true;
-    loadData();
+	if (!m_started) {
+		m_started = true;
+		loadData();
+	}
 }
 
 int ListModel::length()

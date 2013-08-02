@@ -29,7 +29,8 @@ TabbedPane {
         
         PatternsPage {
 	        type: "patterns"
-	        model: listModel
+	        model: patternModel
+	        searchModel: patternSearchModel
         }
     }
     
@@ -40,6 +41,7 @@ TabbedPane {
         PatternsPage {
 	        type: "colors"
 	        model: colorModel
+	        searchModel: colorSearchModel
 	    }
     }
     

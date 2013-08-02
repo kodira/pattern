@@ -32,13 +32,14 @@
 * [OK] Bug: Pressing 'save' should not do anything if image is not completely loaded
 * [OK] Add local caching of tiles to speedup loading and save bandwidth
 
+== 1.4.0 ==
+* [OK] Search
+
 == Future versions ==
 * Use "booster" for faster start-up
 * Locally stored favorites (maybe reuse/extend the caching to pin local tiles)
-* Search
 * Automatic background changing, e.g. each Monday one of my favorites
 * Only load 2nd tab when needed
-* Use new segmented title bar control (once it can be used properly on tabs with various toolbars - not gold SDK)
 * Better handling of the offline situation. We could use app.online but enhance it so after each wake-up the app checks
   its online state. Because while sleeping the app receives no signals.
   With this change we could use a global overlay that informs the user that he needs to be online.

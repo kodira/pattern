@@ -42,10 +42,14 @@ App::App()
 
     ListModel *patternModel = new ListModel(20, "patterns", "top", this);
     ListModel *colorModel = new ListModel(20, "colors", "top", this);
+    ListModel *patternSearchModel = new ListModel(20, "patterns", "top", this);
+    ListModel *colorSearchModel = new ListModel(20, "colors", "top", this);
 
     QmlDocument *qml = QmlDocument::create("asset:///main.qml");
-    qml->setContextProperty("listModel", patternModel);
+    qml->setContextProperty("patternModel", patternModel);
     qml->setContextProperty("colorModel", colorModel);
+    qml->setContextProperty("patternSearchModel", patternSearchModel);
+    qml->setContextProperty("colorSearchModel", colorSearchModel);
     qml->setContextProperty("app", this);
 
     m_online = m_networkConfigManager.isOnline();
