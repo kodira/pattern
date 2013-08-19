@@ -26,6 +26,7 @@ TabbedPane {
     Tab {
         title: qsTr("Patterns")
         imageSource: "asset:///images/patterns.png"
+        objectName: "PatternsTab"
         
         PatternsPage {
 	        type: "patterns"
@@ -37,6 +38,7 @@ TabbedPane {
     Tab {
         title: qsTr("Colors")
         imageSource: "asset:///images/colors.png"
+        objectName: "ColorsTab"
         
         PatternsPage {
 	        type: "colors"
@@ -50,6 +52,19 @@ TabbedPane {
         imageSource: "asset:///images/about.png"
         
         AboutPage {}
+    }
+    
+    // Upon startup we load the pattern model
+    onCreationCompleted: {
+        patternModel.start()
+    }
+    
+    // If the second tab gets activated we load the color model
+    // TODO: It would be even better defere loading of the tab completely 
+    onActiveTabChanged: {
+        if (activeTab.objectName === "ColorsTab") {
+            colorModel.start()
+        }
     }
 }
 

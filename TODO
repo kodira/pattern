@@ -34,8 +34,8 @@
 
 == 1.4.0 ==
 * [OK] Search
+* [OK] Bug: Loading indicator for subsequent pages is not visible anymore
 * Adapt splash screens to new search UI
-* Bug: Loading indicator for subsequent pages is not visible anymore
 
 == Future versions ==
 * Use "booster" for faster start-up

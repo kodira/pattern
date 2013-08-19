@@ -5,10 +5,6 @@ ListView {
     
     property variant parentPane
     
-    onCreationCompleted: {
-        dataModel.start()
-    }
-    
     listItemComponents: [
         ListItemComponent {
             type: "listItem"
