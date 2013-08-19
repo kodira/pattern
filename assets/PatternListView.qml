@@ -9,9 +9,6 @@ ListView {
         dataModel.start()
     }
     
-    // dataModel comming from C++
-    dataModel: root.model
-    
     listItemComponents: [
         ListItemComponent {
             type: "listItem"
@@ -26,7 +23,7 @@ ListView {
                 initialized: ListItem.initialized
                 bottomMargin: 20
                 isFooter: true
-                isLoading: dataModel.loading
+                isLoading: ListItem.view.dataModel.loading // Model needs to be accessed via attached property
             }
         }
     ]
