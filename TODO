@@ -35,7 +35,7 @@
 == 1.4.0 ==
 * [OK] Search
 * [OK] Bug: Loading indicator for subsequent pages is not visible anymore
-* Adapt Q10 splash screen to new search UI
+* [OK] Adapt Q10 splash screen to new search UI
 
 == Future versions ==
 * Use "booster" for faster start-up
