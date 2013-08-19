@@ -25,11 +25,7 @@ NavigationPane {
     
     property string type: ""
     property variant model
-    property variant  searchModel
-    
-    // Caching
-    property int page: model.page
-    property int results: model.results
+    property variant searchModel
     
     onPopTransitionEnded: {
         // We need to destroy the details page here, because we always
@@ -176,7 +172,7 @@ NavigationPane {
 	        // Only show if we are loading XML and the list is completely empty
 	        ActivityIndicator {
 	            id: indicator
-                running: (searchContainer.showSearchResults && app.online && root.searchModel.loading && root.seachModel.length() === 0) ||
+                running: (searchContainer.showSearchResults && app.online && root.searchModel.loading && root.searchModel.length() === 0) ||
                 		 (root.model.loading && app.online && root.model.length() === 0) 
 	            visible: running
 	            horizontalAlignment: HorizontalAlignment.Center
