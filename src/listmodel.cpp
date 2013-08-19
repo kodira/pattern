@@ -161,8 +161,6 @@ void ListModel::loadData()
     
 	setLoading(true);
 
-	qDebug() << "INFO: Doing network request";
-
     QString url = QString("http://www.colourlovers.com/api/%1/%2/?numberResults=%3&resultOffset=%4?orderCol=%5&sortBy=DESC&keywords=%6")
             .arg(m_type)
             .arg(m_category)

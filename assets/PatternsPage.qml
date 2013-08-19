@@ -37,7 +37,6 @@ NavigationPane {
     }
 
     Page {
-        
         titleBar: TitleBar {
             kind: TitleBarKind.FreeForm
             kindProperties: FreeFormTitleBarKindProperties {
